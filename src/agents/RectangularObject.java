@@ -71,10 +71,11 @@ public abstract class RectangularObject {
 		if (!changes && actualSpeed == 1) {
 			return false;
 		}
-		position.setLocation(new Point(position.x + movement.x * actualSpeed, position.y + movement.y * actualSpeed));
-		if (!Board.getInstance().canMove(position, this)) {
-			System.out.println("CHECKPOINT");
-		}
+		position.setLocation(new Point(position.x + movement.x * (actualSpeed - 1), position.y + movement.y * (actualSpeed - 1)));
+//		if (!Board.getInstance().canMove(position, this)) {
+//			System.out.println("CHECKPOINT");
+//			Board.getInstance().canMove(position, this);
+//		}
 		return true;
 	}
 

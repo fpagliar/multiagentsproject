@@ -33,7 +33,12 @@ public class GUIBoard {
 		Board.getInstance().register(creature.getCreature());
 	}
 	
-	public void register(final GUIImageObject object) {
+	public void register(final GUIWall wall) {
+		objects.add(wall);
+		Board.getInstance().register(wall.getWall());
+	}
+
+	public void register(final Paintable object) {
 		objects.add(object);
 	}
 
