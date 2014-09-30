@@ -1,5 +1,7 @@
 package model;
 
+import gui.GUIBoard;
+
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -8,14 +10,11 @@ import java.util.List;
 import agents.Cannon;
 import agents.Creature;
 import agents.RectangularObject;
+import agents.StraightLine;
 
 public class Board {
 
 	private static Board instance = new Board();
-
-//	private List<Creature> creatures = new ArrayList<Creature>();
-//	private List<Cannon> cannons = new ArrayList<Cannon>();
-//	private List<Wall> walls = new ArrayList<Wall>();
 	private List<RectangularObject> objects = new ArrayList<RectangularObject>();
 
 	public Board() {
@@ -24,35 +23,23 @@ public class Board {
 
 	public List<Creature> getCreatures() {
 		List<Creature> ans = new ArrayList<Creature>();
-		for(RectangularObject object : objects)
-			if(object instanceof Creature)
-				ans.add((Creature)object);
+		for (RectangularObject object : objects)
+			if (object instanceof Creature)
+				ans.add((Creature) object);
 		return ans;
 	}
 
 	public List<Cannon> getCannons() {
 		List<Cannon> ans = new ArrayList<Cannon>();
-		for(RectangularObject object : objects)
-			if(object instanceof Cannon)
-				ans.add((Cannon)object);
+		for (RectangularObject object : objects)
+			if (object instanceof Cannon)
+				ans.add((Cannon) object);
 		return ans;
 	}
-	
-	public void register(RectangularObject object){
+
+	public void register(RectangularObject object) {
 		objects.add(object);
 	}
-
-//	public void register(final Creature creature) {
-//		creatures.add(creature);
-//	}
-//
-//	public void register(final Cannon cannon) {
-//		cannons.add(cannon);
-//	}
-//	
-//	public void register(final Wall wall) {
-//		walls.add(wall);
-//	}
 
 	public boolean isFree(final Point p) {
 		boolean ans = true;
@@ -63,14 +50,44 @@ public class Board {
 		}
 		return ans;
 	}
-	
+
 	public boolean canMove(final Rectangle newPos, final RectangularObject actual) {
 		for (final RectangularObject object : objects) {
 			if ((!object.equals(actual)) && object.occupies(newPos)) {
+				if (object instanceof Cannon) {
+					System.out.println("MOVED TO CANNON");
+					System.exit(0);
+				}
 				return false;
 			}
 		}
 		return true;
+	}
+
+	public void shoot(final Cannon shooter) {
+		final StraightLine line = shooter.shoot();
+		//Not shooting
+		if(line == null)
+			return;
+		System.out.println("SHOOTING: " + line);
+		GUIBoard.getInstance().registerTemp(line);
+		Point p;
+		do {
+			p = line.getNextPoint();
+			for (final RectangularObject object : objects) {
+				if ((!object.equals(shooter)) && object.occupies(p)) {
+					if(object.receiveShot()){
+						System.out.println("Removing killed: " + object);
+						objects.remove(object);
+						GUIBoard.getInstance().remove(object);
+						shooter.killed();
+					}
+					return;
+				}
+			}
+		} while (p.x > 0 && p.x < 1000 && p.y > 0 && p.y < 1000);
+		GUIBoard.getInstance().registerTemp(line);
+		return;
 	}
 
 	public static Board getInstance() {

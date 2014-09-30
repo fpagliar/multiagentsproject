@@ -43,4 +43,5 @@ public class GUIStarCreature extends GUICreature<StarCreature> {
 	protected int getImageHeight() {
 		return IMAGE_HEIGHT;
 	}
+
 }

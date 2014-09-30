@@ -10,4 +10,6 @@ public interface Paintable {
 	 * @return the list of points used by the painting.
 	 */
 	Set<Point> paint(Graphics g);
+	
+	Object getBackendModel();
 }

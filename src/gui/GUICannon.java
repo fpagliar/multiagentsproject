@@ -1,5 +1,7 @@
 package gui;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -31,11 +33,11 @@ public class GUICannon extends GUIImageObject {
 	public GUICannon(final Cannon cannon) {
 		this.cannon = cannon;
 	}
-	
+
 	public Cannon getCannon() {
 		return cannon;
 	}
-	
+
 	@Override
 	public Image getImage() {
 		return image;
@@ -65,5 +67,26 @@ public class GUICannon extends GUIImageObject {
 	protected Set<Point> occupiedPoints() {
 		return cannon.occupiedPoints();
 	}
-	
+
+	@Override
+	public Object getBackendModel() {
+		return cannon;
+	}
+
+	@Override
+	public Set<Point> paint(Graphics g) {
+		Set<Point> points = super.paint(g);
+		final int radius = cannon.getReach();
+		final Rectangle position = cannon.getPosition();
+		int centerX = position.x + position.width / 2;
+		int centerY = position.y + position.height/2;
+		g.setColor(Color.RED);
+		for(int x = centerX - radius; x < centerX + radius ; x++){
+			int y = (int) Math.pow(radius * radius - (x - centerX) * (x - centerX), 0.5);
+			g.drawRect(x, centerY + y, 1, 1);
+			g.drawRect(x, centerY - y, 1, 1);			
+		}
+		
+		return points;
+	}
 }

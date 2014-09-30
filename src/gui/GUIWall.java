@@ -28,4 +28,9 @@ public class GUIWall implements Paintable {
 		return wall.occupiedPoints();
 	}
 
+	@Override
+	public Object getBackendModel() {
+		return wall;
+	}
+
 }

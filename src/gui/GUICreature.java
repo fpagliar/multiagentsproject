@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.io.ObjectInputStream.GetField;
 import java.util.Set;
 
 import agents.Creature;
@@ -31,5 +32,9 @@ public abstract class GUICreature<T extends Creature> extends GUIImageObject {
 	protected Rectangle getPosition() {
 		return creature.getPosition();
 	}
-
+	
+	@Override
+	public Object getBackendModel() {
+		return creature;
+	}
 }

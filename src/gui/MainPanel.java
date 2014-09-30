@@ -26,9 +26,7 @@ public class MainPanel extends JPanel {
 				board.getEmptyCell().paint(g, p);
 			}
 		}
-
 		notEmpty = used;
-
 	}
 
 }

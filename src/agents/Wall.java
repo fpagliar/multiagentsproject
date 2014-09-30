@@ -13,4 +13,9 @@ public class Wall extends RectangularObject {
 		int y = (int) (Math.random() * 1000);
 		return new Wall(new Rectangle(x, y, 20, 20));
 	}
+
+	@Override
+	public boolean receiveShot() {
+		return false;
+	}
 }

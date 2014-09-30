@@ -21,12 +21,15 @@ public abstract class RectangularObject {
 		}
 	}
 
+	private static int ID_COUNT = 0;
+	private final int id;
 	private Rectangle position;
 	private int maxSpeed;
 
 	protected RectangularObject(final Rectangle size, final int maxSpeed) {
 		this.position = size;
 		this.maxSpeed = maxSpeed;
+		this.id = ID_COUNT++;
 	}
 
 	public Rectangle getPosition() {
@@ -35,6 +38,10 @@ public abstract class RectangularObject {
 
 	public int getMaxSpeed() {
 		return maxSpeed;
+	}
+
+	public int getId() {
+		return id;
 	}
 
 	public boolean occupies(final Point point) {
@@ -55,7 +62,7 @@ public abstract class RectangularObject {
 	}
 
 	public boolean move(final Direction direction, final int speed) {
-		if(maxSpeed == 0)
+		if (maxSpeed == 0)
 			return false;
 		final Point movement = direction.getPoint();
 		int actualSpeed = 0;
@@ -71,17 +78,27 @@ public abstract class RectangularObject {
 		if (!changes && actualSpeed == 1) {
 			return false;
 		}
-		position.setLocation(new Point(position.x + movement.x * (actualSpeed - 1), position.y + movement.y * (actualSpeed - 1)));
-//		if (!Board.getInstance().canMove(position, this)) {
-//			System.out.println("CHECKPOINT");
-//			Board.getInstance().canMove(position, this);
-//		}
+		position.setLocation(new Point(position.x + movement.x * (actualSpeed - 1), position.y + movement.y
+				* (actualSpeed - 1)));
+		// if (!Board.getInstance().canMove(position, this)) {
+		// System.out.println("CHECKPOINT");
+		// Board.getInstance().canMove(position, this);
+		// }
 		return true;
 	}
 
+	public Point center() {
+		return new Point(position.x + position.width / 2, position.y + position.height / 2);
+	}
+
+	/**
+	 * @return true if it died with the shot
+	 */
+	public abstract boolean receiveShot();
+
 	@Override
 	public String toString() {
-		return "position from(" + position.x + ", " + position.y + ") to (" + position.width + ", " + position.height
-				+ ")";
+		return "Rectangular Object id:" + id + " position(" + position.x + ", " + position.y + ") dimensions: ("
+				+ position.width + ", " + position.height + ")";
 	}
 }
