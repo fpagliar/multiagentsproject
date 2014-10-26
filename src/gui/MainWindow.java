@@ -13,6 +13,12 @@ public class MainWindow extends JFrame {
 	private MainPanel mainPanel;
 	private DataPanel dataPanel;
 	
+	private static MainWindow window = new MainWindow();
+	
+	public static MainWindow getInstance() {
+		return window;
+	}
+	
 	public MainWindow() {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

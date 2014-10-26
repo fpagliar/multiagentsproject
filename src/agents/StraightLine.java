@@ -5,6 +5,7 @@ import gui.Paintable;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.geom.Point2D;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,10 +17,10 @@ public class StraightLine implements Paintable {
 	private final boolean up;
 	private final boolean right;
 
-	public StraightLine(final Point start, final Point end) {
-		this.start = start;
-		final double deltaX = end.x - start.x;
-		final double deltaY = end.y - start.y;
+	public StraightLine(final Point2D point2d, final Point2D point2d2) {
+		this.start = new Point((int)point2d.getX(), (int)point2d.getY());
+		final double deltaX = point2d2.getX() - point2d.getX();
+		final double deltaY = point2d2.getY() - point2d.getY();
 		if (deltaX == 0) {
 			vertical = true;
 			m = 0;

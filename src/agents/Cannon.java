@@ -2,6 +2,10 @@ package agents;
 
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Line2D;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.Board;
 
@@ -12,6 +16,7 @@ public class Cannon extends RectangularObject {
 	private final int reach;
 	private int cooldown;
 	private Creature target;
+	private Line2D shootingLine;
 
 	// TODO: add shooting callback?
 	public Cannon(final int fireRate, final Rectangle position) {
@@ -27,44 +32,70 @@ public class Cannon extends RectangularObject {
 	// }
 	// }
 
-	public StraightLine shoot() {
+	public Line2D shoot() {
 		cooldown--;
-		if (target == null)
+		// Watching line may have changed, due to movement in the target, but it can still be seen, 
+		// so we should adjust the shootingLine.
+		if (target == null || ((shootingLine = canSee(target)) == null))
 			fixTarget();
 		// No targets?
 		if (target == null)
 			return null;
-		//Can't shoot cd
-		if(cooldown > 0)
+		// Can't shoot cd
+		if (cooldown > 0)
 			return null;
 		cooldown = fireRate;
-		final Rectangle pos = getPosition();
-		final Point center = new Point(pos.x + pos.width / 2, pos.y + pos.height / 2);
-		final Rectangle targetPos = target.getPosition();
-		final Point targetPoint = new Point(targetPos.x + targetPos.width / 2, targetPos.y + targetPos.height / 2);
-		return new StraightLine(center, targetPoint);
+
+		return shootingLine;
 	}
 
 	private void fixTarget() {
+//		System.out.println("FIXING TARGET");
 		double distance = Double.MAX_VALUE;
+		Line2D targetLine = null;
 		Creature target = null;
-		for (Creature c : Board.getInstance().getCreatures()) {
+		Line2D line;
+		for (final Creature c : Board.getInstance().getCreatures()) {
 			Point center = center();
 			double d = distance(new Rectangle(center.x, center.y, 1, 1), c.getPosition());
-			// double d = distance(getPosition(), c.getPosition());
-			if (d < distance) {
+			if (d < distance && (line = canSee(c)) != null) {
 				distance = d;
 				target = c;
+				targetLine = line;
 			}
 		}
 		if (distance < reach) {
 			this.target = target;
-//			System.out.println("NEW TARGET distance:" + distance + " target:" + target + " cannon:" + toString());
+			this.shootingLine = targetLine;
+		} else {
+			this.target = null;
+			this.shootingLine = null;
 		}
+	}
+
+	public Line2D canSee(final Creature creature) {
+		List<Point> targets = new ArrayList<>();
+		final Rectangle pos = getPosition();
+		final Point center = new Point(pos.x + pos.width / 2, pos.y + pos.height / 2);
+		final Rectangle targetPos = creature.getPosition();
+		targets.add(new Point(targetPos.x + targetPos.width / 2, targetPos.y + targetPos.height / 2)); // TARGET CENTER
+		targets.add(new Point(targetPos.x, targetPos.y + targetPos.height)); // TARGET TOP LEFT
+		targets.add(new Point(targetPos.x + targetPos.width, targetPos.y + targetPos.height)); // TARGET TOP RIGHT
+		targets.add(new Point(targetPos.x, targetPos.y)); // TARGET BOTTOM LEFT
+		targets.add(new Point(targetPos.x + targetPos.width, targetPos.y)); // TARGET BOTTOM RIGHT
+
+		for (Point p : targets) {
+			Line2D l = new Line2D.Float((float) center.x, (float) center.y, (float) p.x, (float) p.y);
+			l.intersects(creature.getPosition());
+			if (Board.getInstance().canSee(l, creature, this))
+				return l;
+		}
+		return null;
 	}
 
 	public void killed() {
 		target = null;
+		shootingLine = null;
 	}
 
 	public int getReach() {
@@ -94,5 +125,10 @@ public class Cannon extends RectangularObject {
 	@Override
 	public boolean receiveShot() {
 		return false;
+	}
+
+	@Override
+	public String toString() {
+		return "CANNON: " + super.toString();
 	}
 }

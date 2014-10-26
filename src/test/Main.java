@@ -1,5 +1,7 @@
 package test;
 
+import java.awt.Point;
+
 import gui.GUIBoard;
 import gui.GUICannon;
 import gui.GUIHashtagCreature;
@@ -24,32 +26,37 @@ public class Main {
 	public static void main(String[] args) {
 		final GUIBoard guiBoard = GUIBoard.getInstance();
 		guiBoard.register(new GUICannon(Cannon.getInstance()));
-		for (int i = 0; i < TOTAL_WALLS; i++) {
-			guiBoard.register(new GUIWall(Wall.getInstance()));
-		}
-		for (int i = 0; i < HASHTAG_CREATURES; i++) {
-			boolean validPos = false;
-			HashtagCreature c = HashtagCreature.newInstance();
-			while (!validPos) {
-				c = HashtagCreature.newInstance();
-				if (Board.getInstance().canMove(c.getPosition(), c)) {
-					validPos = true;
-				}
-			}
-			guiBoard.register(new GUIHashtagCreature(c));
-		}
-		for (int i = 0; i < STAR_CREATURES; i++) {
-			boolean validPos = false;
-			StarCreature c = StarCreature.newInstance();
-			while (!validPos) {
-				c = StarCreature.newInstance();
-				if (Board.getInstance().canMove(c.getPosition(), c)) {
-					validPos = true;
-				}
-			}
-			guiBoard.register(new GUIStarCreature(c));
-		}
-		final MainWindow window = new MainWindow();
+		guiBoard.register(new GUIWall(Wall.getInstance()));
+//		c = ;
+		guiBoard.register(new GUIHashtagCreature(HashtagCreature.newInstance(new Point(490, 600))));
+		guiBoard.register(new GUIHashtagCreature(HashtagCreature.newInstance(new Point(490, 300))));
+		
+//		for (int i = 0; i < TOTAL_WALLS; i++) {
+//			guiBoard.register(new GUIWall(Wall.getInstance()));
+//		}
+//		for (int i = 0; i < HASHTAG_CREATURES; i++) {
+//			boolean validPos = false;
+//			HashtagCreature c = HashtagCreature.newInstance();
+//			while (!validPos) {
+//				c = HashtagCreature.newInstance();
+//				if (Board.getInstance().canMove(c.getPosition(), c)) {
+//					validPos = true;
+//				}
+//			}
+//			guiBoard.register(new GUIHashtagCreature(c));
+//		}
+//		for (int i = 0; i < STAR_CREATURES; i++) {
+//			boolean validPos = false;
+//			StarCreature c = StarCreature.newInstance();
+//			while (!validPos) {
+//				c = StarCreature.newInstance();
+//				if (Board.getInstance().canMove(c.getPosition(), c)) {
+//					validPos = true;
+//				}
+//			}
+//			guiBoard.register(new GUIStarCreature(c));
+//		}
+		final MainWindow window = MainWindow.getInstance();
 		window.setVisible(true);
 
 		final Board board = Board.getInstance();

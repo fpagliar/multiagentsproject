@@ -1,9 +1,12 @@
 package model;
 
 import gui.GUIBoard;
+import gui.MainWindow;
 
+import java.awt.LinearGradientPaint;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +59,9 @@ public class Board {
 			if ((!object.equals(actual)) && object.occupies(newPos)) {
 				if (object instanceof Cannon) {
 					System.out.println("MOVED TO CANNON");
-					System.exit(0);
+					while (true) {
+					}
+					// System.exit(0);
 				}
 				return false;
 			}
@@ -65,29 +70,43 @@ public class Board {
 	}
 
 	public void shoot(final Cannon shooter) {
-		final StraightLine line = shooter.shoot();
-		//Not shooting
-		if(line == null)
+		final Line2D line = shooter.shoot();
+		// Not shooting
+		if (line == null)
 			return;
-		System.out.println("SHOOTING: " + line);
-		GUIBoard.getInstance().registerTemp(line);
-		Point p;
-		do {
-			p = line.getNextPoint();
-			for (final RectangularObject object : objects) {
-				if ((!object.equals(shooter)) && object.occupies(p)) {
-					if(object.receiveShot()){
-						System.out.println("Removing killed: " + object);
-						objects.remove(object);
-						GUIBoard.getInstance().remove(object);
-						shooter.killed();
-					}
-					return;
-				}
+		StraightLine l = new StraightLine(line.getP1(), line.getP2());
+		RectangularObject min = null;
+		double minDistance = Integer.MAX_VALUE;
+		for (final RectangularObject object : objects) {
+			double d = Cannon.distance(shooter.getPosition(), object.getPosition());
+			if (!object.equals(shooter) && line.intersects(object.getPosition()) && d < minDistance) {
+				minDistance = d;
+				min = object;
 			}
-		} while (p.x > 0 && p.x < 1000 && p.y > 0 && p.y < 1000);
-		GUIBoard.getInstance().registerTemp(line);
+		}
+		if (min == null) {
+			throw new IllegalStateException();
+		}
+		if (min.receiveShot()) {
+			System.out.println("Removing killed: " + min);
+			objects.remove(min);
+			GUIBoard.getInstance().remove(min);
+			shooter.killed();
+		}
+		GUIBoard.getInstance().registerTemp(l);
 		return;
+	}
+
+	public boolean canSee(final Line2D line, final Creature target, final Cannon shooter) {
+		if(!line.intersects(target.getPosition())){
+			throw new IllegalArgumentException();
+		}
+		for (final RectangularObject object : objects) {
+			if(!object.equals(shooter) && !object.equals(target) && line.intersects(object.getPosition())){
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public static Board getInstance() {

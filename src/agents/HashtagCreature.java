@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 
 public class HashtagCreature extends Creature {
 
-	private static final int HEALTH = 3;
+	private static final int HEALTH = 4;
 	
 	private HashtagCreature(final int health, final Rectangle size, final int speed) {
 		super(health, size, speed);
