@@ -11,8 +11,8 @@ import gui.MainWindow;
 import model.Board;
 import agents.Cannon;
 import agents.Creature;
-import agents.HashtagCreature;
 import agents.RectangularObject.Direction;
+import agents.hashtagCreature.HashtagCreature;
 import agents.StarCreature;
 import agents.Wall;
 

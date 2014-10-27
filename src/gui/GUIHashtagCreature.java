@@ -5,7 +5,7 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 
-import agents.HashtagCreature;
+import agents.hashtagCreature.HashtagCreature;
 
 public class GUIHashtagCreature extends GUICreature<HashtagCreature> {
 

@@ -4,7 +4,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 
 public class StarCreature extends Creature {
-
+	
 	private StarCreature(final int health, final Rectangle size, final int speed) {
 		super(health, size, speed);
 	}
