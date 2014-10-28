@@ -19,6 +19,10 @@ public abstract class RectangularObject {
 		public Point getPoint() {
 			return dir;
 		}
+		
+		public static Direction from(final int x, final int y) {
+			return (x == 1) ? LEFT : (x == -1) ? RIGHT : (y == 1) ? UP : (y == -1) ? DOWN : null;
+		}
 	}
 
 	private static int ID_COUNT = 0;

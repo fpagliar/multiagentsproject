@@ -108,6 +108,21 @@ public class Board {
 		}
 		return true;
 	}
+	
+	public Cannon getCannon(final Creature creature){
+		double distance = Double.MAX_VALUE;
+		Cannon min = null;
+		for(final Cannon cannon : getCannons()){
+			double d = Cannon.distance(cannon.getPosition(), creature.getPosition());
+			if (distance > d) {
+				distance = d;
+				min = cannon;
+			}
+		}
+		if(min == null)
+			throw new IllegalStateException("No cannons");
+		return min;
+	}
 
 	public static Board getInstance() {
 		return instance;

@@ -3,6 +3,7 @@ package agents.hashtagCreature;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -14,8 +15,12 @@ public class HashtagCreature extends Creature {
 
 	private static List<Set<HeuristicRule>> rules = new ArrayList<>();
 	
+	//LOADS THE RULZ
 	static {
-		//LOAD THE RULZ
+		// LEVEL 1 RULZ
+		Set<HeuristicRule> level1Rulz = new HashSet<>();
+		level1Rulz.add(BasicMovementRule.getRule());
+		rules.add(level1Rulz);
 	}
 	
 	private static final int HEALTH = 4;
