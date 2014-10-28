@@ -29,6 +29,7 @@ public class Main {
 		guiBoard.register(new GUIWall(Wall.getInstance()));
 //		c = ;
 		guiBoard.register(new GUIHashtagCreature(HashtagCreature.newInstance(new Point(490, 600))));
+		guiBoard.register(new GUIHashtagCreature(HashtagCreature.newInstance(new Point(490, 700))));
 		guiBoard.register(new GUIHashtagCreature(HashtagCreature.newInstance(new Point(490, 300))));
 		
 //		for (int i = 0; i < TOTAL_WALLS; i++) {
@@ -69,26 +70,27 @@ public class Main {
 				ticks++;
 			}
 			for (final Creature c : board.getCreatures()) {
+				c.action();
 //				System.out.println(c);
-				if (Math.random() > 0.5) {
-					if (!moveHorizontal(c)) {
-						if (!moveVertical(c)) {
-							for (int i = 0; i < KICKS; i++) {
-								int index = (int) (Math.random() * Direction.values().length);
-								c.move(Direction.values()[index], c.getMaxSpeed());
-							}
-						}
-					}
-				} else {
-					if (!moveVertical(c)) {
-						if (!moveHorizontal(c)) {
-							for (int i = 0; i < KICKS; i++) {
-								int index = (int) (Math.random() * Direction.values().length);
-								c.move(Direction.values()[index], c.getMaxSpeed());
-							}
-						}
-					}
-				}
+//				if (Math.random() > 0.5) {
+//					if (!moveHorizontal(c)) {
+//						if (!moveVertical(c)) {
+//							for (int i = 0; i < KICKS; i++) {
+//								int index = (int) (Math.random() * Direction.values().length);
+//								c.move(Direction.values()[index], c.getMaxSpeed());
+//							}
+//						}
+//					}
+//				} else {
+//					if (!moveVertical(c)) {
+//						if (!moveHorizontal(c)) {
+//							for (int i = 0; i < KICKS; i++) {
+//								int index = (int) (Math.random() * Direction.values().length);
+//								c.move(Direction.values()[index], c.getMaxSpeed());
+//							}
+//						}
+//					}
+//				}
 			}
 			for (final Cannon c : board.getCannons()) {
 				board.shoot(c);
@@ -100,30 +102,30 @@ public class Main {
 			}
 		}
 	}
-
-	private static boolean moveHorizontal(final Creature c) {
-		boolean ans;
-		if (c.getPosition().x > 500) {
-			ans = c.move(Direction.RIGHT, (Math.min(c.getMaxSpeed(), c.getPosition().x - 500)));
-		} else if (c.getPosition().x < 500) {
-			ans = c.move(Direction.LEFT, (Math.min(c.getMaxSpeed(), 500 - c.getPosition().x)));
-		} else {
-			// ans = true;
-			ans = false;
-		}
-		return ans;
-	}
-
-	private static boolean moveVertical(final Creature c) {
-		boolean ans;
-		if (c.getPosition().y > 500) {
-			ans = c.move(Direction.DOWN, (Math.min(c.getMaxSpeed(), c.getPosition().y - 500)));
-		} else if (c.getPosition().y < 500) {
-			ans = c.move(Direction.UP, (Math.min(c.getMaxSpeed(), 500 - c.getPosition().y)));
-		} else {
-			// ans = true;
-			ans = false;
-		}
-		return ans;
-	}
+//
+//	private static boolean moveHorizontal(final Creature c) {
+//		boolean ans;
+//		if (c.getPosition().x > 500) {
+//			ans = c.move(Direction.RIGHT, (Math.min(c.getMaxSpeed(), c.getPosition().x - 500)));
+//		} else if (c.getPosition().x < 500) {
+//			ans = c.move(Direction.LEFT, (Math.min(c.getMaxSpeed(), 500 - c.getPosition().x)));
+//		} else {
+//			// ans = true;
+//			ans = false;
+//		}
+//		return ans;
+//	}
+//
+//	private static boolean moveVertical(final Creature c) {
+//		boolean ans;
+//		if (c.getPosition().y > 500) {
+//			ans = c.move(Direction.DOWN, (Math.min(c.getMaxSpeed(), c.getPosition().y - 500)));
+//		} else if (c.getPosition().y < 500) {
+//			ans = c.move(Direction.UP, (Math.min(c.getMaxSpeed(), 500 - c.getPosition().y)));
+//		} else {
+//			// ans = true;
+//			ans = false;
+//		}
+//		return ans;
+//	}
 }

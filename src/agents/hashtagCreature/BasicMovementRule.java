@@ -1,5 +1,6 @@
 package agents.hashtagCreature;
 
+import java.awt.Rectangle;
 import java.util.List;
 
 import model.Action;
@@ -20,8 +21,9 @@ public class BasicMovementRule implements HeuristicRule {
 	public boolean applies(final Creature agent, final Board board) {
 		final List<Cannon> cannons = board.getCannons();
 		for (final Cannon cannon : cannons) {
-			double distance = Cannon.distance(cannon.getPosition(), agent.getPosition());
-			if (distance < cannon.getReach()) {
+			double distance = Cannon.distance(new Rectangle(cannon.center().x, cannon.center().y, 1, 1), agent.getPosition());
+			// Add max speed, as it can reach that point on the next turn
+			if (distance < cannon.getReach() + agent.getMaxSpeed()) {
 				return false;
 			}
 		}
@@ -30,8 +32,7 @@ public class BasicMovementRule implements HeuristicRule {
 
 	@Override
 	public Action getAction() {
-		// TODO Auto-generated method stub
-		return null;
+		return BasicMovementAction.getAction();
 	}
 
 }

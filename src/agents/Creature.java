@@ -19,5 +19,7 @@ public abstract class Creature extends RectangularObject {
 	public boolean isDead() {
 		return health < 0;
 	}
+	
+	public abstract void action();
 
 }

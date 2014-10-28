@@ -24,4 +24,10 @@ public class StarCreature extends Creature {
 	public String toString() {
 		return "StarCreature: " + super.toString();
 	}
+
+	@Override
+	public void action() {
+		// TODO Auto-generated method stub
+		
+	}
 }

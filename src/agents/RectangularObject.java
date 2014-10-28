@@ -64,10 +64,8 @@ public abstract class RectangularObject {
 				ans.add(new Point(i, j));
 		return ans;
 	}
-
-	public boolean move(final Direction direction, final int speed) {
-		if (maxSpeed == 0)
-			return false;
+	
+	public int getMovementSpeed(final Direction direction, final int speed) {
 		final Point movement = direction.getPoint();
 		int actualSpeed = 0;
 		boolean changes = true;
@@ -80,15 +78,50 @@ public abstract class RectangularObject {
 			}
 		}
 		if (!changes && actualSpeed == 1) {
-			return false;
+			return 0;
 		}
+		return actualSpeed;
+	}
+
+	public boolean canMove(final Direction direction, final int speed) {
+		if (maxSpeed == 0)
+			return false;
+		return getMovementSpeed(direction, speed) > 0;
+	}
+
+	public void move(final Direction direction, final int speed) {
+		if (!canMove(direction, speed)) {
+			throw new IllegalArgumentException("CAN'T MOVE THERE");
+		}
+		final Point movement = direction.getPoint();
+		final int actualSpeed = getMovementSpeed(direction, speed);
+		
 		position.setLocation(new Point(position.x + movement.x * (actualSpeed - 1), position.y + movement.y
 				* (actualSpeed - 1)));
-		// if (!Board.getInstance().canMove(position, this)) {
-		// System.out.println("CHECKPOINT");
-		// Board.getInstance().canMove(position, this);
-		// }
-		return true;
+
+//		if (maxSpeed == 0)
+//			return false;
+//		final Point movement = direction.getPoint();
+//		int actualSpeed = 0;
+//		boolean changes = true;
+//		while (actualSpeed <= speed && actualSpeed <= maxSpeed && changes) {
+//			actualSpeed++;
+//			final Rectangle newPos = new Rectangle(position.x + direction.dir.x * actualSpeed, position.y
+//					+ direction.dir.y * actualSpeed, position.width, position.height);
+//			if (!Board.getInstance().canMove(newPos, this)) {
+//				changes = false;
+//			}
+//		}
+//		if (!changes && actualSpeed == 1) {
+//			return false;
+//		}
+//		position.setLocation(new Point(position.x + movement.x * (actualSpeed - 1), position.y + movement.y
+//				* (actualSpeed - 1)));
+//		// if (!Board.getInstance().canMove(position, this)) {
+//		// System.out.println("CHECKPOINT");
+//		// Board.getInstance().canMove(position, this);
+//		// }
+//		return true;
 	}
 
 	public Point center() {

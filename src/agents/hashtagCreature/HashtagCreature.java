@@ -18,9 +18,19 @@ public class HashtagCreature extends Creature {
 	//LOADS THE RULZ
 	static {
 		// LEVEL 1 RULZ
-		Set<HeuristicRule> level1Rulz = new HashSet<>();
-		level1Rulz.add(BasicMovementRule.getRule());
+		final Set<HeuristicRule> level1Rulz = new HashSet<>();
+		level1Rulz.add(DodgeObstaclesRule.getRule());
 		rules.add(level1Rulz);
+		
+		// LEVEL 2 RULZ
+		final Set<HeuristicRule> level2Rulz = new HashSet<>();
+		level2Rulz.add(BasicMovementRule.getRule());
+		rules.add(level2Rulz);
+
+		// LEVEL 4 RULZ
+		final Set<HeuristicRule> level4Rulz = new HashSet<>();
+		level4Rulz.add(DefaultRule.getRule());
+		rules.add(level4Rulz);
 	}
 	
 	private static final int HEALTH = 4;
@@ -66,6 +76,7 @@ public class HashtagCreature extends Creature {
 			}
 		}
 		// No rule applies, do nothing?
-		return;
+		throw new IllegalStateException("NOONE RULZ");
+//		return;
 	}
 }
