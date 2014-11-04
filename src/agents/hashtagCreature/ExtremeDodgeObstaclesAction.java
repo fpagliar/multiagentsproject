@@ -9,21 +9,16 @@ import model.Board;
 import agents.Creature;
 import agents.RectangularObject.Direction;
 
-public class DodgeObstaclesAction implements Action {
+public class ExtremeDodgeObstaclesAction implements Action {
 
-	private static BasicMovementAction movementAction = BasicMovementAction.getAction();
+	private static ExtremeMovementAction movementAction = ExtremeMovementAction.getAction();
 
 	// This is the memory
 	private Direction movement;
 	private Direction target;
-	final BasicDodgeObstaclesRule rool;
-	
-	public static DodgeObstaclesAction createAction(final BasicDodgeObstaclesRule rool) {
-		return new DodgeObstaclesAction(rool);
-	}
-	
-	public DodgeObstaclesAction(final BasicDodgeObstaclesRule rool) {
-		this.rool = rool;
+
+	public static ExtremeDodgeObstaclesAction createAction() {
+		return new ExtremeDodgeObstaclesAction();
 	}
 
 	@Override
@@ -32,12 +27,7 @@ public class DodgeObstaclesAction implements Action {
 			setTarget(creature, board);
 
 		if (creature.canMove(target, creature.getMaxSpeed())) {
-//			movement = target;
-			creature.move(target, creature.getMaxSpeed());
-			target = null;
-			movement = null;
-			rool.setTarget(null);
-			return;
+			movement = target;
 		}
 
 		if (movement == null || !creature.canMove(movement, creature.getMaxSpeed())) {
@@ -65,8 +55,6 @@ public class DodgeObstaclesAction implements Action {
 	private void setTarget(final Creature agent, final Board board) {
 		final List<Direction> dirs = new ArrayList<>(movementAction.getDirections(agent, board));
 		target = dirs.get((int) (Math.random() * dirs.size()));
-		// CALLING THE ROOL TO INFORM THE NEW TARGET
-		rool.setTarget(target);
 	}
 
 }

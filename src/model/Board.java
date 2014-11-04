@@ -1,9 +1,7 @@
 package model;
 
 import gui.GUIBoard;
-import gui.MainWindow;
 
-import java.awt.LinearGradientPaint;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Line2D;
@@ -128,4 +126,17 @@ public class Board {
 		return instance;
 	}
 
+	public boolean inCircleOfFire(final Creature agent) {
+		final List<Cannon> cannons = getCannons();
+		for (final Cannon cannon : cannons) {
+			double distance = Cannon.distance(new Rectangle(cannon.center().x, cannon.center().y, 1, 1),
+					agent.getPosition());
+//			System.out.println(distance);
+			// Add max speed, as it can reach that point on the next turn
+			if (distance < cannon.getReach() + agent.getMaxSpeed()) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

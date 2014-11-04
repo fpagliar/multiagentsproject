@@ -19,13 +19,18 @@ public class HashtagCreature extends Creature {
 	static {
 		// LEVEL 1 RULZ
 		final Set<HeuristicRule> level1Rulz = new HashSet<>();
-		level1Rulz.add(DodgeObstaclesRule.getRule());
+		level1Rulz.add(ExtremeDodgeObstaclesRule.createRule());
 		rules.add(level1Rulz);
 		
 		// LEVEL 2 RULZ
 		final Set<HeuristicRule> level2Rulz = new HashSet<>();
-		level2Rulz.add(BasicMovementRule.getRule());
+		level2Rulz.add(BasicDodgeObstaclesRule.createRule());
 		rules.add(level2Rulz);
+
+		// LEVEL 3 RULZ
+		final Set<HeuristicRule> level3Rulz = new HashSet<>();
+		level3Rulz.add(BasicMovementRule.getRule());
+		rules.add(level3Rulz);
 
 		// LEVEL 4 RULZ
 		final Set<HeuristicRule> level4Rulz = new HashSet<>();
@@ -61,7 +66,9 @@ public class HashtagCreature extends Creature {
 	
 	public void action() {
 		final List<HeuristicRule> validRulz = new ArrayList<>();
+//		int i = 0;
 		for (final Set<HeuristicRule> level : rules) {
+//			i++;
 			for (final HeuristicRule rool : level) {
 				if (rool.applies(this, Board.getInstance())) {
 					validRulz.add(rool);
@@ -69,6 +76,7 @@ public class HashtagCreature extends Creature {
 			}
 			// If at least one rule of this level applies
 			if (validRulz.size() > 0) {
+//				System.out.println("Level " + i + " applies");
 				// Choose a random rule from the ones that apply to the situation.
 				final HeuristicRule rool = validRulz.get((int) (Math.random() * validRulz.size()));
 				rool.getAction().perform(this, Board.getInstance());

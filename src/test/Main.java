@@ -1,20 +1,17 @@
 package test;
 
-import java.awt.Point;
-
 import gui.GUIBoard;
 import gui.GUICannon;
 import gui.GUIHashtagCreature;
-import gui.GUIStarCreature;
 import gui.GUIWall;
 import gui.MainWindow;
+
+import java.awt.Point;
+
 import model.Board;
 import agents.Cannon;
-import agents.Creature;
-import agents.RectangularObject.Direction;
-import agents.hashtagCreature.HashtagCreature;
-import agents.StarCreature;
 import agents.Wall;
+import agents.hashtagCreature.HashtagCreature;
 
 public class Main {
 
@@ -29,8 +26,9 @@ public class Main {
 		guiBoard.register(new GUIWall(Wall.getInstance()));
 //		c = ;
 		guiBoard.register(new GUIHashtagCreature(HashtagCreature.newInstance(new Point(490, 600))));
-		guiBoard.register(new GUIHashtagCreature(HashtagCreature.newInstance(new Point(490, 700))));
-		guiBoard.register(new GUIHashtagCreature(HashtagCreature.newInstance(new Point(490, 300))));
+		HashtagCreature creature = HashtagCreature.newInstance(new Point(490, 700));
+		guiBoard.register(new GUIHashtagCreature(creature));
+//		guiBoard.register(new GUIHashtagCreature(HashtagCreature.newInstance(new Point(490, 300))));
 		
 //		for (int i = 0; i < TOTAL_WALLS; i++) {
 //			guiBoard.register(new GUIWall(Wall.getInstance()));
@@ -69,8 +67,9 @@ public class Main {
 			} else {
 				ticks++;
 			}
-			for (final Creature c : board.getCreatures()) {
-				c.action();
+			creature.action();
+//			for (final Creature c : board.getCreatures()) {
+//				c.action();
 //				System.out.println(c);
 //				if (Math.random() > 0.5) {
 //					if (!moveHorizontal(c)) {
@@ -91,13 +90,13 @@ public class Main {
 //						}
 //					}
 //				}
-			}
+//			}
 			for (final Cannon c : board.getCannons()) {
 				board.shoot(c);
 			}
 			try {
 				window.repaint();
-				Thread.sleep(100, 0);
+				Thread.sleep(10, 0);
 			} catch (InterruptedException e) {
 			}
 		}

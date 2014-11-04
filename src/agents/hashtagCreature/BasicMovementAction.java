@@ -37,9 +37,14 @@ public class BasicMovementAction implements Action {
 
 	@Override
 	public void perform(final Creature creature, final Board board) {
-		final List<Direction> dirs = new ArrayList<Direction>(getDirections(creature, board));
+		final List<Direction> dirs = new ArrayList<Direction>();
+		for(Direction d : getDirections(creature, board))
+			if(creature.canMove(d, creature.getMaxSpeed()))
+				dirs.add(d);
+		
 		if (dirs.size() == 0)
 			throw new IllegalStateException("WHERE THE FUCK AM I?");
+		
 		// Move to a random possible direction
 		creature.move(dirs.get((int) (Math.random() * dirs.size())), creature.getMaxSpeed());
 		// final Cannon cannon = board.getCannon(creature);
