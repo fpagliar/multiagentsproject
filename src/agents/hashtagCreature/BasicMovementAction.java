@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import utils.RandomGenerator;
 import model.Action;
 import model.Board;
 import agents.Cannon;
@@ -46,19 +47,7 @@ public class BasicMovementAction implements Action {
 			throw new IllegalStateException("WHERE THE FUCK AM I?");
 		
 		// Move to a random possible direction
-		creature.move(dirs.get((int) (Math.random() * dirs.size())), creature.getMaxSpeed());
-		// final Cannon cannon = board.getCannon(creature);
-		// int deltaX = (creature.getPosition().x < cannon.getPosition().x)? 1 :
-		// -1;
-		// int deltaY = (creature.getPosition().y < cannon.getPosition().y)? 1 :
-		// -1;
-		// if ((deltaX != 0) && ((deltaY == 0) || Math.random() > 0.5)) {
-		// creature.move(Direction.from(deltaX, 0), creature.getMaxSpeed());
-		// } else if(deltaY != 0){
-		// creature.move(Direction.from(0, deltaY), creature.getMaxSpeed());
-		// } else {
-		// throw new IllegalStateException("WHERE THE FUCK AM I?");
-		// }
+		creature.move(dirs.get((int) (RandomGenerator.getNext() * dirs.size())), creature.getMaxSpeed());
 		return;
 	}
 

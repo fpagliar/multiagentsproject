@@ -131,4 +131,10 @@ public class Cannon extends RectangularObject {
 	public String toString() {
 		return "CANNON: " + super.toString();
 	}
+
+	@Override
+	public String labelString() {
+		return "Cannon: " + getId();
+	}
+	
 }

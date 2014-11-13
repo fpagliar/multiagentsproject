@@ -4,6 +4,8 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.util.Set;
 
+import agents.RectangularObject;
+
 public interface Paintable {
 
 	/**
@@ -11,5 +13,5 @@ public interface Paintable {
 	 */
 	Set<Point> paint(Graphics g);
 	
-	Object getBackendModel();
+	RectangularObject getBackendModel();
 }

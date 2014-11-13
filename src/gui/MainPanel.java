@@ -15,7 +15,6 @@ public class MainPanel extends JPanel {
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-
 		final Set<Point> used = new HashSet<>();
 		for (final Paintable p : board.getObjects()) {
 			used.addAll(p.paint(g));
@@ -28,5 +27,4 @@ public class MainPanel extends JPanel {
 		}
 		notEmpty = used;
 	}
-
 }

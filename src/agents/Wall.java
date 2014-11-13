@@ -25,4 +25,9 @@ public class Wall extends RectangularObject {
 	public String toString() {
 		return "WALL " + super.toString();
 	}
+
+	@Override
+	public String labelString() {
+		return "Wall: " + getId();
+	}
 }

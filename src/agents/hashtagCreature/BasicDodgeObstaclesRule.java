@@ -34,18 +34,13 @@ public class BasicDodgeObstaclesRule implements HeuristicRule {
 			for (final Direction dir : dirs) {
 				canMove = canMove || agent.canMove(dir, agent.getMaxSpeed());
 			}
+
 			// If it applies, it will set the target!
 			return !canMove;
 		} else {
 			// I already have a target set
 			return true;
 		}		
-//		boolean blockedMoves = false;
-//		for (Direction dir : dirs) {
-//			if (!agent.canMove(dir, agent.getMaxSpeed()))
-//				blockedMoves = true;
-//		}
-//		return blockedMoves;
 	}
 
 	/**

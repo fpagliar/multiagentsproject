@@ -16,15 +16,6 @@ public class BasicMovementRule implements HeuristicRule {
 	@Override
 	public boolean applies(final Creature agent, final Board board) {
 		return ! board.inCircleOfFire(agent);
-//		final List<Cannon> cannons = board.getCannons();
-//		for (final Cannon cannon : cannons) {
-//			double distance = Cannon.distance(new Rectangle(cannon.center().x, cannon.center().y, 1, 1), agent.getPosition());
-//			// Add max speed, as it can reach that point on the next turn
-//			if (distance < cannon.getReach() + agent.getMaxSpeed()) {
-//				return false;
-//			}
-//		}
-//		return true;
 	}
 
 	@Override

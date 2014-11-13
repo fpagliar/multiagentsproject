@@ -11,6 +11,7 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 
 import agents.Cannon;
+import agents.RectangularObject;
 
 public class GUICannon extends GUIImageObject {
 
@@ -69,7 +70,7 @@ public class GUICannon extends GUIImageObject {
 	}
 
 	@Override
-	public Object getBackendModel() {
+	public RectangularObject getBackendModel() {
 		return cannon;
 	}
 

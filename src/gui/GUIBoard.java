@@ -57,11 +57,11 @@ public class GUIBoard {
 	}
 
 	public void remove(final RectangularObject object) {
-		for(Paintable p : objects){
-			if(p.getBackendModel().equals(object)){
+		for (Paintable p : objects) {
+			if (p.getBackendModel().equals(object)) {
 				objects.remove(p);
 				return;
-			}				
+			}
 		}
 	}
 

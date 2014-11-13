@@ -25,15 +25,11 @@ public class ExtremeDodgeObstaclesRule implements HeuristicRule {
 		if(!board.inCircleOfFire(agent))
 			return false;
 		final Set<Direction> dirs = movementAction.getDirections(agent, board);
-//		boolean blockedMoves = true;
 		boolean canMove = false;
 		for (Direction dir : dirs) {
 			canMove = canMove || agent.canMove(dir, agent.getMaxSpeed());
-//			if (!agent.canMove(dir, agent.getMaxSpeed()))
-//				blockedMoves = blockedMoves && true;
 		}
 		return ! canMove;
-//		return blockedMoves;
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
@@ -33,7 +34,10 @@ public abstract class GUIImageObject implements Paintable {
 			for (int y = pos.y; y < pos.y + pos.height; y += getImageHeight()) {
 				g.drawImage(getImage(), x, y, null);
 			}
-
+		
+		g.setColor(Color.WHITE);
+		g.drawString(getBackendModel().labelString(), pos.x + pos.width, pos.y + pos.height/2);
+		
 		return occupiedPoints();
 	}
 

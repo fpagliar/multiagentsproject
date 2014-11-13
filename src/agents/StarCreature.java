@@ -3,6 +3,8 @@ package agents;
 import java.awt.Point;
 import java.awt.Rectangle;
 
+import utils.RandomGenerator;
+
 public class StarCreature extends Creature {
 	
 	private StarCreature(final int health, final Rectangle size, final int speed) {
@@ -10,8 +12,8 @@ public class StarCreature extends Creature {
 	}
 
 	public static StarCreature newInstance() {
-		int x = (int)(Math.random() * 1000);
-		int y = (int)(Math.random() * 1000);
+		int x = (int)(RandomGenerator.getNext() * 1000);
+		int y = (int)(RandomGenerator.getNext() * 1000);
 		return new StarCreature(1, new Rectangle(x, y, 20, 20), 3);
 //		return new StarCreature(1, new Rectangle(0, 0, 20, 20), 3);
 	}
@@ -30,4 +32,10 @@ public class StarCreature extends Creature {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public String labelString() {
+		return "Star Creature: " + getId();
+	}
+	
 }

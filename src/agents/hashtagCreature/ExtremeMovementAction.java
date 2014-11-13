@@ -1,16 +1,14 @@
 
 package agents.hashtagCreature;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
+import model.Action;
+import model.Board;
 import agents.Cannon;
 import agents.Creature;
 import agents.RectangularObject.Direction;
-import model.Action;
-import model.Board;
 
 public class ExtremeMovementAction implements Action {
 

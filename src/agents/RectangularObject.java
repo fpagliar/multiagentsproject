@@ -138,4 +138,8 @@ public abstract class RectangularObject {
 		return "Rectangular Object id:" + id + " position(" + position.x + ", " + position.y + ") dimensions: ("
 				+ position.width + ", " + position.height + ")";
 	}
+	
+	
+	public abstract String labelString();
+
 }

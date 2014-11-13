@@ -64,8 +64,8 @@ public class StraightLine implements Paintable {
 	}
 
 	@Override
-	public Object getBackendModel() {
-		return this;
+	public RectangularObject getBackendModel() {
+		throw new IllegalAccessError("WTF ARE YOU TRYING TO DO");
 	}
 
 	@Override

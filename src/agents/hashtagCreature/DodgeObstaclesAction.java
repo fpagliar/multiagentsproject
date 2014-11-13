@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import utils.RandomGenerator;
 import model.Action;
 import model.Board;
 import agents.Creature;
@@ -32,7 +33,6 @@ public class DodgeObstaclesAction implements Action {
 			setTarget(creature, board);
 
 		if (creature.canMove(target, creature.getMaxSpeed())) {
-//			movement = target;
 			creature.move(target, creature.getMaxSpeed());
 			target = null;
 			movement = null;
@@ -53,7 +53,7 @@ public class DodgeObstaclesAction implements Action {
 				throw new IllegalStateException("NO POSSIBLE MOVES :(");
 				// return;
 			}
-			movement = possible.get((int) (Math.random() * possible.size()));
+			movement = possible.get((int) (RandomGenerator.getNext() * possible.size()));
 		}
 
 		// FIXME: it should dodge, not dummy go other place.
@@ -64,7 +64,7 @@ public class DodgeObstaclesAction implements Action {
 
 	private void setTarget(final Creature agent, final Board board) {
 		final List<Direction> dirs = new ArrayList<>(movementAction.getDirections(agent, board));
-		target = dirs.get((int) (Math.random() * dirs.size()));
+		target = dirs.get((int) (RandomGenerator.getNext() * dirs.size()));
 		// CALLING THE ROOL TO INFORM THE NEW TARGET
 		rool.setTarget(target);
 	}

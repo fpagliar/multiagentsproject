@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.Set;
 
+import agents.RectangularObject;
 import agents.Wall;
 
 public class GUIWall implements Paintable {
@@ -29,7 +30,7 @@ public class GUIWall implements Paintable {
 	}
 
 	@Override
-	public Object getBackendModel() {
+	public RectangularObject getBackendModel() {
 		return wall;
 	}
 

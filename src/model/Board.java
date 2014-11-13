@@ -131,12 +131,25 @@ public class Board {
 		for (final Cannon cannon : cannons) {
 			double distance = Cannon.distance(new Rectangle(cannon.center().x, cannon.center().y, 1, 1),
 					agent.getPosition());
-//			System.out.println(distance);
-			// Add max speed, as it can reach that point on the next turn
-			if (distance < cannon.getReach() + agent.getMaxSpeed()) {
+			// In the next turn they can be in shooting zone, but they aren't there now
+			if (distance < cannon.getReach() + agent.getMaxSpeed() && distance > cannon.getReach() ) {
 				return true;
 			}
 		}
 		return false;
 	}
+	
+	public boolean inShootingZone(final Creature agent) {
+		final List<Cannon> cannons = getCannons();
+		for (final Cannon cannon : cannons) {
+			double distance = Cannon.distance(new Rectangle(cannon.center().x, cannon.center().y, 1, 1),
+					agent.getPosition());
+			// Cannon can shoot it
+			if (distance < cannon.getReach()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 }
