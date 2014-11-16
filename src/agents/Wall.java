@@ -8,9 +8,9 @@ public class Wall extends RectangularObject {
 		super(size, 0);
 	}
 
-	public static Wall getInstance() {
-		return new Wall(new Rectangle(450, 620, 50, 5));
-//		return new Wall(new Rectangle(490, 570, 50, 5));
+	public static Wall getInstance(int x, int y) {
+//		return new Wall(new Rectangle(450, 620, 50, 5));
+		return new Wall(new Rectangle(x, y, 70, 5));
 //		int x = (int) (Math.random() * 1000);
 //		int y = (int) (Math.random() * 1000);
 //		return new Wall(new Rectangle(x, y, 20, 20));

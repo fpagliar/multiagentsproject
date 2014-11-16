@@ -19,7 +19,8 @@ public class Main {
 	public static void main(String[] args) {
 		final GUIBoard guiBoard = GUIBoard.getInstance();
 		guiBoard.register(new GUICannon(Cannon.getInstance()));
-		guiBoard.register(new GUIWall(Wall.getInstance()));
+		guiBoard.register(new GUIWall(Wall.getInstance(430, 620)));
+		guiBoard.register(new GUIWall(Wall.getInstance(470, 570)));
 		Math.random();
 		guiBoard.register(new GUIHashtagCreature(HashtagCreature.newInstance(new Point(300, 250))));
 		guiBoard.register(new GUIHashtagCreature(HashtagCreature.newInstance(new Point(440, 250))));
