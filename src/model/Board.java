@@ -8,6 +8,8 @@ import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.xml.internal.ws.api.pipe.NextAction;
+
 import agents.Cannon;
 import agents.Creature;
 import agents.RectangularObject;
@@ -17,9 +19,10 @@ public class Board {
 
 	private static Board instance = new Board();
 	private List<RectangularObject> objects = new ArrayList<RectangularObject>();
-
+	private boolean gameOver;
+	
 	public Board() {
-
+		gameOver = false;
 	}
 
 	public List<Creature> getCreatures() {
@@ -56,11 +59,15 @@ public class Board {
 		for (final RectangularObject object : objects) {
 			if ((!object.equals(actual)) && object.occupies(newPos)) {
 				if (object instanceof Cannon) {
-					System.out.println("MOVED TO CANNON");
-					while (true) {
-					}
+					gameOver = true;
+//					System.out.println("MOVED TO CANNON");
+//					while (true) {
+//					}
 					// System.exit(0);
 				}
+				return false;
+			}
+			if(newPos.x < 0 || newPos.x > 1000 || newPos.y < 0 || newPos.y > 1000){
 				return false;
 			}
 		}
@@ -86,7 +93,7 @@ public class Board {
 			throw new IllegalStateException();
 		}
 		if (min.receiveShot()) {
-			System.out.println("Removing killed: " + min);
+//			System.out.println("Removing killed: " + min);
 			objects.remove(min);
 			GUIBoard.getInstance().remove(min);
 			shooter.killed();
@@ -126,6 +133,11 @@ public class Board {
 		return instance;
 	}
 
+	public static Board restart() {
+		instance = new Board();
+		return instance;
+	}
+	
 	public boolean inCircleOfFire(final Creature agent) {
 		final List<Cannon> cannons = getCannons();
 		for (final Cannon cannon : cannons) {
@@ -151,5 +163,22 @@ public class Board {
 		}
 		return false;
 	}
+	
+	public double distanceToTarget(final Creature agent) {
+		final List<Cannon> cannons = getCannons();
+		double minDistance = Double.MAX_VALUE;
+		for (final Cannon cannon : cannons) {
+			double distance = Cannon.distance(new Rectangle(cannon.center().x, cannon.center().y, 1, 1),
+					agent.getPosition());
+			if (distance < minDistance) {
+				minDistance = distance;
+			}
+		}
+		return minDistance;
+	}
 
+	public boolean isGameOver() {
+		return gameOver;
+	}
+	
 }

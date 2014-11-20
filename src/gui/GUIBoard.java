@@ -1,10 +1,14 @@
 package gui;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
 import model.Board;
+import agents.Cannon;
 import agents.RectangularObject;
+import agents.Wall;
+import agents.hashtagCreature.HashtagCreature;
 
 public class GUIBoard {
 
@@ -20,8 +24,8 @@ public class GUIBoard {
 	public List<Paintable> getObjects() {
 		List<Paintable> ans = new ArrayList<>(objects);
 		ans.addAll(temps);
-//		if(temps.size() != 0)
-//			System.out.println("TEMPS:" + temps.size());
+		// if(temps.size() != 0)
+		// System.out.println("TEMPS:" + temps.size());
 		return ans;
 	}
 
@@ -66,6 +70,20 @@ public class GUIBoard {
 	}
 
 	public static GUIBoard getInstance() {
+		return instance;
+	}
+
+	public static GUIBoard createNewBoard() {
+		Board.restart();
+		instance = new GUIBoard();
+		instance.register(new GUICannon(Cannon.getInstance()));
+		instance.register(new GUIWall(Wall.getInstance(430, 620)));
+		instance.register(new GUIWall(Wall.getInstance(470, 570)));
+//		instance.register(new GUIHashtagCreature(HashtagCreature.newInstance(new Point(300, 250))));
+		instance.register(new GUIHashtagCreature(HashtagCreature.newInstance(new Point(440, 250))));
+//		final HashtagCreature creature = HashtagCreature.newInstance(new Point(490, 700));
+//		instance.register(new GUIHashtagCreature(creature));
+		instance.register(new GUIHashtagCreature(HashtagCreature.newInstance(new Point(490, 300))));
 		return instance;
 	}
 

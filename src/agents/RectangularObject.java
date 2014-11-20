@@ -39,6 +39,11 @@ public abstract class RectangularObject {
 	public Rectangle getPosition() {
 		return new Rectangle(position);
 	}
+	
+	public void setPosition(final Point newPos) {
+		position.x = newPos.x;
+		position.y = newPos.y;
+	}
 
 	public int getMaxSpeed() {
 		return maxSpeed;
@@ -66,7 +71,6 @@ public abstract class RectangularObject {
 	}
 	
 	public int getMovementSpeed(final Direction direction, final int speed) {
-		final Point movement = direction.getPoint();
 		int actualSpeed = 0;
 		boolean changes = true;
 		while (actualSpeed <= speed && actualSpeed <= maxSpeed && changes) {
@@ -98,30 +102,6 @@ public abstract class RectangularObject {
 		
 		position.setLocation(new Point(position.x + movement.x * (actualSpeed - 1), position.y + movement.y
 				* (actualSpeed - 1)));
-
-//		if (maxSpeed == 0)
-//			return false;
-//		final Point movement = direction.getPoint();
-//		int actualSpeed = 0;
-//		boolean changes = true;
-//		while (actualSpeed <= speed && actualSpeed <= maxSpeed && changes) {
-//			actualSpeed++;
-//			final Rectangle newPos = new Rectangle(position.x + direction.dir.x * actualSpeed, position.y
-//					+ direction.dir.y * actualSpeed, position.width, position.height);
-//			if (!Board.getInstance().canMove(newPos, this)) {
-//				changes = false;
-//			}
-//		}
-//		if (!changes && actualSpeed == 1) {
-//			return false;
-//		}
-//		position.setLocation(new Point(position.x + movement.x * (actualSpeed - 1), position.y + movement.y
-//				* (actualSpeed - 1)));
-//		// if (!Board.getInstance().canMove(position, this)) {
-//		// System.out.println("CHECKPOINT");
-//		// Board.getInstance().canMove(position, this);
-//		// }
-//		return true;
 	}
 
 	public Point center() {

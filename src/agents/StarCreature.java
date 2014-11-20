@@ -22,6 +22,10 @@ public class StarCreature extends Creature {
 		return new StarCreature(1, new Rectangle(p.x, p.y, 20, 20), 3);
 	}
 	
+	public static StarCreature newInstance(final Rectangle rect) {
+		return new StarCreature(1, rect, 3);
+	}
+	
 	@Override
 	public String toString() {
 		return "StarCreature: " + super.toString();

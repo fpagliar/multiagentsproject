@@ -22,7 +22,7 @@ public class MainWindow extends JFrame {
 	public MainWindow() {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		setBounds(1, 1, 1200, 1000);
+		setBounds(1, 1, 1400, 1000);
 		setResizable(false);
 		center();
 
@@ -32,7 +32,7 @@ public class MainWindow extends JFrame {
 
 		dataPanel = new DataPanel();
 		dataPanel.setBackground(Color.DARK_GRAY);
-		dataPanel.setSize(200, 1000);
+		dataPanel.setSize(400, 1000);
 
 		add(mainPanel);
 		add(dataPanel);
@@ -44,8 +44,15 @@ public class MainWindow extends JFrame {
 				(size.height - getHeight()) / 2);
 	}
 
-	public void repaint() {
-		mainPanel.repaint();
+	public void putString(final Object key, final String value) {
+		dataPanel.putString(key, value);
 	}
 
+	public void removeString(final Object key) {
+		dataPanel.removeString(key);
+	}
+	
+	public void clearStrings() {
+		dataPanel.clear();
+	}
 }
