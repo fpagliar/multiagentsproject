@@ -4,38 +4,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Board;
-import agents.Creature;
-import agents.RectangularObject.Direction;
+import qlearning.StarAgent.AgentAction;
 
-public class World implements RLWorld {
+public class World {
 
-	private final Creature creature;
+	private final StarAgent creature;
 	
-	public World(final Creature creature) {
+	public World(final StarAgent creature) {
 		this.creature = creature;
 	}
 
-	@Override
 	public BoardState getInitialState() {
 		return new BoardState(creature);
 	}
 	
-	@Override
-	public List<Direction> getActions() {
-		final List<Direction> possible = new ArrayList<>();
-		for(final Direction dir : Direction.values())
-			if(creature.canMove(dir, creature.getMaxSpeed()))
-				possible.add(dir);
+	public List<AgentAction> getActions() {
+		final List<AgentAction> possible = new ArrayList<>();
+		possible.add(AgentAction.STAY);
+		possible.add(AgentAction.ROTATE);
+		if(creature.canMove())
+			possible.add(AgentAction.FOWARD);
 		return possible;
 	}
 	
-	@Override
-	public BoardState getNextState(final Direction action) {
-		creature.move(action, creature.getMaxSpeed());
+	public BoardState getNextState(final AgentAction action) {
+		creature.perform(action);
+//		creature.move(action, creature.getMaxSpeed());
 		return new BoardState(creature);
 	}
 
-	@Override
 	public boolean endState() {
 		if(creature.isDead() || Board.getInstance().isGameOver())
 			return true;

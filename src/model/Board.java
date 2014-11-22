@@ -54,6 +54,16 @@ public class Board {
 		}
 		return ans;
 	}
+	
+	public boolean isFree(final Rectangle rect) {
+		boolean ans = true;
+		for(int i = rect.x; i < rect.x + rect.width ; i++)
+			for(int j = rect.y; j < rect.y + rect.height; j++)
+				if(!isFree(new Point(i,j)))
+						ans = false;
+		return ans;
+	}
+
 
 	public boolean canMove(final Rectangle newPos, final RectangularObject actual) {
 		for (final RectangularObject object : objects) {

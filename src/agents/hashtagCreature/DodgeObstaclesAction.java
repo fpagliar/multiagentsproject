@@ -1,5 +1,7 @@
 package agents.hashtagCreature;
 
+import gui.MainWindow;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -50,6 +52,7 @@ public class DodgeObstaclesAction implements Action {
 			}
 			if (possible.size() == 0) {
 				// System.out.println("NO POSSIBLE MOVES :(");
+				MainWindow.getInstance().repaint();
 				throw new IllegalStateException("NO POSSIBLE MOVES :(");
 				// return;
 			}

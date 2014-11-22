@@ -3,18 +3,25 @@ package agents;
 import java.awt.Point;
 import java.awt.Rectangle;
 
+import model.Board;
 import utils.RandomGenerator;
 
 public class StarCreature extends Creature {
 	
-	private StarCreature(final int health, final Rectangle size, final int speed) {
+	protected StarCreature(final int health, final Rectangle size, final int speed) {
 		super(health, size, speed);
 	}
 
 	public static StarCreature newInstance() {
-		int x = (int)(RandomGenerator.getNext() * 1000);
-		int y = (int)(RandomGenerator.getNext() * 1000);
-		return new StarCreature(1, new Rectangle(x, y, 20, 20), 3);
+		while (true) {
+			int x = (int) (RandomGenerator.getNext() * 1000);
+			int y = (int) (RandomGenerator.getNext() * 1000);
+			if (Board.getInstance().isFree(new Rectangle(x, y, 20, 20))) {
+				System.out.println("CREATING IN -> x:" + x + " y:" + y);
+				return new StarCreature(1, new Rectangle(x, y, 20, 20), 3);
+			} else
+				System.out.println("AA");
+		}
 //		return new StarCreature(1, new Rectangle(0, 0, 20, 20), 3);
 	}
 
