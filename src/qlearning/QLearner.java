@@ -12,7 +12,6 @@ import java.util.Map;
 
 import model.Board;
 import qlearning.StarAgent.AgentAction;
-import utils.Pair;
 import utils.RandomGenerator;
 import agents.Cannon;
 import agents.Creature;
@@ -24,11 +23,11 @@ public class QLearner {
 	private final double gamma = 0.9;
 	// Epsilon starts with value 1 at episode 0, and will reach value ~0 at this episode
 	private final double epsilonZeroEpisode = 300;
+	public static final int TOTAL_EPOCHS = 10000;
 
 	private StarAgent creature;
 	private boolean visual;
 	private MainWindow window;
-//	private final Point initialPos;
 	
 	// Q(s,a)= Q(s,a) + alpha * (R(s,a) + gamma * Max(next state, all actions) -
 	// Q(s,a))
@@ -38,7 +37,6 @@ public class QLearner {
 	public QLearner() {
 		visual = true;
 		creature = StarAgent.newInstance(new Point(200, 200));
-//		initialPos = new Point(creature.getPosition().x, creature.getPosition().y);
 		for (final BoardState state : BoardState.createAll(creature)) {
 			final Map<AgentAction, Double> map = new HashMap<AgentAction, Double>();
 			for (final AgentAction action : AgentAction.values())
@@ -52,7 +50,6 @@ public class QLearner {
 		GUIBoard.createNewBoard();
 		creature = StarAgent.newInstance();
 		GUIBoard.getInstance().register(new GUIStarCreature(creature));
-//		creature.setPosition(initialPos);
 	}
 
 	public static void main(String[] args) {
@@ -74,9 +71,10 @@ public class QLearner {
 		
 		final double epsilonM = -1.0 / epsilonZeroEpisode;
 
-		// For each episode
-		//TODO: AGREGAR EPSILON = 1 QUE VA DECAYENDO LINEALMENTE POR CADA ITERACION DENTRO DE UNA MISMA EPOCA
-		for (int i = 0; i < 100000; i++) { // epochs
+		// For each epoch
+		for (int i = 0; i < TOTAL_EPOCHS; i++) {
+			window.setProgress(i);
+			window.repaint();
 			if (visual) {
 				window.clearStrings();
 			}
@@ -84,14 +82,16 @@ public class QLearner {
 			final World world = new World(creature);
 			BoardState actualState = world.getInitialState();
 			GUIBoard.getInstance().clearTemps();
+			boolean allBest = i % 2000 == 0;
 			int ticks = 0;
 			int episode = 0;
 			double episodeEpsilon;
 			while (!world.endState()) { // goal state // train episodes
+				if(window.paused)
+					continue;
 				episodeEpsilon = epsilonM * episode + 1.0; 
 				episode++;
-				if (visual && i % 100 == 0) {
-					updateStrings();
+				if (visual && i % 1000 == 0) {
 					ticks++;
 					if (ticks % 10 == 0) {
 						ticks = 0;
@@ -106,7 +106,7 @@ public class QLearner {
 				// Select one among all possible actions for the current state
 				final List<AgentAction> actions = world.getActions();
 				AgentAction action = null;
-				if (RandomGenerator.getNext() > episodeEpsilon) {
+				if (RandomGenerator.getNext() > episodeEpsilon || allBest) {
 					Double max = - Double.MAX_VALUE;
 					for (final AgentAction d : actions) {
 						if (Q.get(actualState).get(d) > max) {
@@ -138,17 +138,22 @@ public class QLearner {
 
 				// Set the next state as the current state
 				actualState = nextState;
+				updateStrings(actualState);
 			}
 		}
 		showResult();
 	}
 	
-	private void updateStrings() {
+	private void updateStrings(final BoardState currentBoard) {
+		window.setTitle(currentBoard.getTitle());
+		window.clearStrings();
 		for (final BoardState state : Q.keySet()) {
 			for (final AgentAction action : Q.get(state).keySet()) {
 				if (Q.get(state).get(action) != 0)
-					window.putString(new Pair<BoardState, AgentAction>(state, action), 
-							new DecimalFormat("#.##").format(Q.get(state).get(action)));
+					window.putString(state.toString() + " - " + action + " : "
+							+ new DecimalFormat("#.##").format(Q.get(state).get(action)));
+//					window.putString(new Pair<BoardState, AgentAction>(state, action), 
+//							new DecimalFormat("#.##").format(Q.get(state).get(action)));
 			}
 		}
 	}	
@@ -160,6 +165,8 @@ public class QLearner {
 		BoardState actualState = world.getInitialState();
 		int ticks = 0;
 		while (!world.endState()) { // goal state
+			if(window.paused)
+				continue;
 			if (visual) {
 				if (ticks % 100 == 0) {
 					ticks = 0;
@@ -186,6 +193,7 @@ public class QLearner {
 
 			// Set the next state as the current state
 			actualState = nextState;
+			updateStrings(actualState);
 			for (final Cannon c : Board.getInstance().getCannons()) {
 				Board.getInstance().shoot(c);
 			}

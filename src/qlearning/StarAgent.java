@@ -52,7 +52,7 @@ public class StarAgent extends StarCreature {
 			}
 
 		} else if (action == AgentAction.FOWARD) {
-			this.move(direction, getMaxSpeed());
+			super.move(direction, getMaxSpeed());
 		} else if (action == AgentAction.STAY) {
 			return; // DO NOTHING
 		} else {
@@ -66,6 +66,11 @@ public class StarAgent extends StarCreature {
 
 	public Direction getDirection() {
 		return direction;
+	}
+	
+	@Override
+	public void move(Direction direction, int speed) {
+		throw new IllegalStateException("USE PERFORM");
 	}
 
 }

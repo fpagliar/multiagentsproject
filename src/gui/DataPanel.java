@@ -2,8 +2,8 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -11,29 +11,39 @@ public class DataPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private static final int STRING_HEIGHT = 20;
-	
-	private static final Map<Object, String> values = new HashMap<Object, String>();
-	
+
+	private static List<String> values = new ArrayList<String>();
+	private static String title = "";
+
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.setColor(Color.WHITE);
+		g.setColor(Color.RED);
+		g.drawString(title, 1000 + 10, 10);
+
 		int pos = 1;
-		for(final Object key : values.keySet()){
-			g.drawString(key.toString() + " : " + values.get(key), 1000 + 10, pos * STRING_HEIGHT + 5);
+		for (final String string : values) {
+			if (pos % 2 == 0)
+				g.setColor(Color.GRAY);
+			else
+				g.setColor(Color.WHITE);
+			g.drawString(string, 1000 + 10, pos * STRING_HEIGHT + 30);
 			pos++;
 		}
 	}
-	
-	public void putString(final Object key, final String value) {
-		values.put(key, value);
+
+	public void putString(final String value) {
+		final List<String> newList = new ArrayList<>();
+		newList.addAll(values);
+		newList.add(value);
+		values = newList;
 	}
 
-	public void removeString(final Object key) {
-		values.remove(key);
+	public void setTitle(final String value) {
+		title = value;
 	}
-	
+
 	public void clear() {
-		values.clear();
+		values = new ArrayList<>();
 	}
 }

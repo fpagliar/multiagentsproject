@@ -6,7 +6,6 @@ import java.util.List;
 import model.Board;
 import agents.Cannon;
 import agents.Creature;
-import agents.RectangularObject.Direction;
 import agents.StarCreature;
 import agents.hashtagCreature.HashtagCreature;
 
@@ -17,7 +16,7 @@ public class BoardState {
 	// private final int agentsInCircleOfFire;
 	// private final double distanceToTarget;
 	private final QState state;
-	private final Direction facingDirection;
+//	private final Direction facingDirection;
 	private final boolean canSeeCannon;
 	private final StarAgent agent;
 	
@@ -53,7 +52,7 @@ public class BoardState {
 		hashtagAgentsInside = hashtagAgents;
 		// agentsInCircleOfFire = circleOfFireAgents;
 		this.state = getState(agent);
-		this.facingDirection = agent.getDirection();
+//		this.facingDirection = agent.getDirection();
 		this.canSeeCannon = canSeeCannon(agent);
 		this.agent = agent;
 	}
@@ -62,9 +61,15 @@ public class BoardState {
 		if (agent.isDead())
 			return -100.0;
 		if (Board.getInstance().getCreatures().size() == 1)
-			return -100.0;
+			return -1000.0;
 		if (Board.getInstance().isGameOver())
 			return 250.0;
+		if (state == QState.OUTSIDE && canSeeCannon)
+			return 1.0;
+		if (state == QState.OUTSIDE && !canSeeCannon)
+			return -1.0;
+		if (state == QState.NO_MANS_LAND && hashtagAgentsInside > 0)
+			return 20.0;
 		return 0.0;
 	}
 
@@ -97,7 +102,7 @@ public class BoardState {
 			return false;
 		final BoardState other = (BoardState) obj;
 		return other.state == this.state && 
-				other.facingDirection == this.facingDirection && 
+//				other.facingDirection == this.facingDirection && 
 				other.canSeeCannon == this.canSeeCannon &&
 				other.hashtagAgentsInside == this.hashtagAgentsInside &&
 				other.starAgentsInside == this.starAgentsInside;
@@ -105,36 +110,42 @@ public class BoardState {
 	
 	@Override
 	public int hashCode() {
-		return (state.ordinal() + 27) * (starAgentsInside + 13) * (hashtagAgentsInside + 7)
-				* (facingDirection.ordinal() + 23);
+		return (state.ordinal() + 27) * (starAgentsInside + 13) * (hashtagAgentsInside + 7);
+//				* (facingDirection.ordinal() + 23);
 	}
 		
 	private BoardState(final int starAgentsInside, final int hashtagAgentsInside, final QState state,
-			final Direction facingDirection, final boolean canSeeCannon, final StarAgent agent) {
+			final boolean canSeeCannon, final StarAgent agent) {
 		this.starAgentsInside = starAgentsInside;
 		this.hashtagAgentsInside = hashtagAgentsInside;
 		this.state = state;
-		this.facingDirection = facingDirection;
+//		this.facingDirection = facingDirection;
 		this.canSeeCannon = canSeeCannon;
 		this.agent = agent;
 	}
 	
 	public static List<BoardState> createAll(final StarAgent agent) {
 		final List<BoardState> list = new ArrayList<>();
-		for(int i = 0; i < 4 ; i++)
-			for(int j = 0; j < 4; j++)
-				for(final QState state : QState.values())
-					for(final Direction dir : Direction.values()){
-						list.add(new BoardState(i, j, state, dir, true, agent));
-						list.add(new BoardState(i, j, state, dir, false, agent));
+		for (int i = 0; i < 4; i++)
+			for (int j = 0; j < 4; j++)
+				for (final QState state : QState.values()){
+//					for (final Direction dir : Direction.values()) {
+						list.add(new BoardState(i, j, state, true, agent));
+						list.add(new BoardState(i, j, state, false, agent));
 					}
 		return list;
 	}
 	
 	@Override
 	public String toString() {
-		return state.toString() + " - " + facingDirection.toString() + ":" + canSeeCannon + " inside: "
+		return state.toString() + " - " + canSeeCannon + " inside: "
 				+ (starAgentsInside + hashtagAgentsInside);
+//		return state.toString() + " - " + facingDirection.toString() + ":" + canSeeCannon + " inside: "
+//				+ (starAgentsInside + hashtagAgentsInside);
+	}
+	
+	public String getTitle(){
+		return agent.getDirection().toString() + " -> " + this.toString();
 	}
 
 }

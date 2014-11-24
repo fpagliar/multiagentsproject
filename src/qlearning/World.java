@@ -5,6 +5,8 @@ import java.util.List;
 
 import model.Board;
 import qlearning.StarAgent.AgentAction;
+import agents.Creature;
+import agents.hashtagCreature.HashtagCreature;
 
 public class World {
 
@@ -36,6 +38,16 @@ public class World {
 	public boolean endState() {
 		if(creature.isDead() || Board.getInstance().isGameOver())
 			return true;
+		int hashtag = 0;
+		for(final Creature c : Board.getInstance().getCreatures())
+			if(c instanceof HashtagCreature)
+				hashtag++;
+		if(hashtag == 1){
+			for(final Creature c : Board.getInstance().getCreatures())
+				if(c instanceof HashtagCreature)
+					if(!Board.getInstance().inShootingZone(c))
+						return true;
+		}
 		return Board.getInstance().getCreatures().size() <= 1;
 	}
 }
