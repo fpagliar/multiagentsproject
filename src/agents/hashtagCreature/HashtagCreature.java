@@ -72,7 +72,7 @@ public class HashtagCreature extends RoolBasedCreature {
 		
 	@Override
 	public String labelString() {
-		return "# Creature: " + getId();
+		return "# - " + getId() + ": " + getHealth();
 	}
 
 }

@@ -41,8 +41,8 @@ public class ExtremeDodgeObstaclesAction implements Action {
 			}
 			if (possible.size() == 0) {
 				// System.out.println("NO POSSIBLE MOVES :(");
-				throw new IllegalStateException("NO POSSIBLE MOVES :(");
-				// return;
+//				throw new IllegalStateException("NO POSSIBLE MOVES :(");
+				 return;
 			}
 			movement = possible.get((int) (RandomGenerator.getNext() * possible.size()));
 		}

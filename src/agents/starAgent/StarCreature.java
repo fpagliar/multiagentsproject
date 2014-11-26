@@ -75,7 +75,7 @@ public class StarCreature extends RoolBasedCreature {
 
 	@Override
 	public String labelString() {
-		return "Star Creature: " + getId();
+		return "* - " + getId() + ": " + getHealth();
 	}
 	
 }

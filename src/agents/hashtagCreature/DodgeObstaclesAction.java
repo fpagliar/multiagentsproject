@@ -53,7 +53,7 @@ public class DodgeObstaclesAction implements Action {
 			if (possible.size() == 0) {
 				// System.out.println("NO POSSIBLE MOVES :(");
 				MainWindow.getInstance().repaint();
-				System.out.println("NO POSIBLE MOVES :(");
+//				System.out.println("NO POSIBLE MOVES :(");
 //				throw new IllegalStateException("NO POSSIBLE MOVES :(");
 				 return;
 			}

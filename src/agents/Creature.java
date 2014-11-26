@@ -21,5 +21,9 @@ public abstract class Creature extends RectangularObject {
 	}
 	
 	public abstract void action();
+	
+	public int getHealth() {
+		return health;
+	}
 
 }
