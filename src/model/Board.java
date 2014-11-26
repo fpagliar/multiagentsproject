@@ -13,15 +13,16 @@ import agents.Cannon;
 import agents.Creature;
 import agents.RectangularObject;
 import agents.StraightLine;
+import agents.RectangularObject.Direction;
 
 public class Board {
 
 	private static Board instance = new Board();
 	private List<RectangularObject> objects = new ArrayList<RectangularObject>();
-	private boolean gameOver;
+//	private boolean gameOver;
 	
 	public Board() {
-		gameOver = false;
+//		gameOver = false;
 	}
 
 	public List<Creature> getCreatures() {
@@ -67,14 +68,14 @@ public class Board {
 	public boolean canMove(final Rectangle newPos, final RectangularObject actual) {
 		for (final RectangularObject object : objects) {
 			if ((!object.equals(actual)) && object.occupies(newPos)) {
-				if (object instanceof Cannon) {
-					gameOver = true;
-					MainWindow.getInstance().paused = true;
+//				if (object instanceof Cannon) {
+//					gameOver = true;
+//					MainWindow.getInstance().paused = true;
 //					System.out.println("MOVED TO CANNON");
 //					while (true) {
 //					}
 					// System.exit(0);
-				}
+//				}
 				return false;
 			}
 			if(newPos.x < 0 || newPos.x > 1000 || newPos.y < 0 || newPos.y > 1000){
@@ -82,6 +83,26 @@ public class Board {
 			}
 		}
 		return true;
+	}
+	
+	private RectangularObject isOccupied(final Rectangle newPos, final RectangularObject actual) {
+		for (final RectangularObject object : objects) {
+			if ((!object.equals(actual)) && object.occupies(newPos)) {
+				return object;
+			}
+		}
+		return null;
+	}
+
+	public boolean touchingCannon(final Creature c) {
+		final Rectangle position = c.getPosition();
+		for (final Direction d : Direction.values()) {
+			final Rectangle newPos = new Rectangle(position.x + d.dir.x, position.y + d.dir.y, position.width,
+					position.height);
+			if (Board.getInstance().isOccupied(newPos, c) instanceof Cannon)
+				return true;
+		}
+		return false;
 	}
 
 	public void shoot(final Cannon shooter) {
@@ -175,11 +196,25 @@ public class Board {
 	}
 	
 	public double distanceToTarget(final Creature agent) {
+		return distanceToTarget(agent.getPosition());
+//		final List<Cannon> cannons = getCannons();
+//		double minDistance = Double.MAX_VALUE;
+//		for (final Cannon cannon : cannons) {
+//			double distance = Cannon.distance(new Rectangle(cannon.center().x, cannon.center().y, 1, 1),
+//					agent.getPosition());
+//			if (distance < minDistance) {
+//				minDistance = distance;
+//			}
+//		}
+//		return minDistance;
+	}
+	
+	public double distanceToTarget(final Rectangle pos) {
 		final List<Cannon> cannons = getCannons();
 		double minDistance = Double.MAX_VALUE;
 		for (final Cannon cannon : cannons) {
 			double distance = Cannon.distance(new Rectangle(cannon.center().x, cannon.center().y, 1, 1),
-					agent.getPosition());
+					pos);
 			if (distance < minDistance) {
 				minDistance = distance;
 			}
@@ -187,8 +222,9 @@ public class Board {
 		return minDistance;
 	}
 
-	public boolean isGameOver() {
-		return gameOver;
-	}
+//
+//	public boolean isGameOver() {
+//		return gameOver;
+//	}
 	
 }

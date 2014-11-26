@@ -17,8 +17,8 @@ public class SuicideRool implements HeuristicRule {
 	
 	@Override
 	public boolean applies(final Creature agent, final Board board) {
-		if(board.inShootingZone(agent))
-			return true;
+//		if(board.inShootingZone(agent))
+//			return true;
 		if(!board.inCircleOfFire(agent))
 			return false;
 		int hashTags = 0;
@@ -29,7 +29,7 @@ public class SuicideRool implements HeuristicRule {
 					return true;
 				else
 					stars++;
-			if (c instanceof HashtagCreature && board.inShootingZone(c))
+			if (c instanceof HashtagCreature && board.distanceToTarget(c) < 98)
 					hashTags++;
 		}
 		return hashTags > 1 && stars > 1;

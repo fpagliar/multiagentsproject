@@ -18,6 +18,11 @@ public class HashtagCreature extends RoolBasedCreature {
 	private static List<Set<HeuristicRule>> getRools() {
 		final List<Set<HeuristicRule>> rules = new ArrayList<>();
 		
+		// LEVEL 0 RULZ
+		final Set<HeuristicRule> level0Rulz = new HashSet<>();
+		level0Rulz.add(SupremeRule.getRule());
+		rules.add(level0Rulz);
+
 		// LEVEL 1 RULZ
 		final Set<HeuristicRule> level1Rulz = new HashSet<>();
 		level1Rulz.add(ExtremeDodgeObstaclesRule.createRule());
@@ -72,7 +77,7 @@ public class HashtagCreature extends RoolBasedCreature {
 		
 	@Override
 	public String labelString() {
-		return "# - " + getId() + ": " + getHealth();
+		return "# " + getId() + ": " + getHealth();
 	}
 
 }

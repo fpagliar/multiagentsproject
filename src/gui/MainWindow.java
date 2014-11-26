@@ -15,16 +15,18 @@ public class MainWindow extends JFrame {
 
 	private MainPanel mainPanel;
 	private DataPanel dataPanel;
-//	private JProgressBar progressBar;	
+	// private JProgressBar progressBar;
 	public volatile boolean paused = false;
+	public volatile boolean slowMotion = false;
 	private JButton pauseButton;
-	
+	private JButton slowMotionButton;
+
 	private static MainWindow window = new MainWindow();
-	
+
 	public static MainWindow getInstance() {
 		return window;
 	}
-	
+
 	public MainWindow() {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -39,13 +41,13 @@ public class MainWindow extends JFrame {
 		dataPanel = new DataPanel();
 		dataPanel.setBackground(Color.DARK_GRAY);
 		dataPanel.setSize(400, 1000);
-		
-//		progressBar = new JProgressBar(0, QLearner.TOTAL_EPOCHS);
-//		progressBar.setValue(0);
-//		progressBar.setSize(1000, 30);
-//		progressBar.setVisible(true);
-//		progressBar.setStringPainted(true);
-		
+
+		// progressBar = new JProgressBar(0, QLearner.TOTAL_EPOCHS);
+		// progressBar.setValue(0);
+		// progressBar.setSize(1000, 30);
+		// progressBar.setVisible(true);
+		// progressBar.setStringPainted(true);
+
 		pauseButton = new JButton("Pause");
 		pauseButton.setVisible(true);
 		pauseButton.setSize(100, 30);
@@ -53,23 +55,38 @@ public class MainWindow extends JFrame {
 			@Override
 			public void actionPerformed(final ActionEvent arg0) {
 				paused = !paused;
-				if(paused)
+				if (paused)
 					pauseButton.setText("Continue");
 				else
 					pauseButton.setText("Pause");
 			}
 		});
-		
+
+		slowMotionButton = new JButton("Slow motion");
+		slowMotionButton.setVisible(true);
+//		slowMotionButton.setSize(100, 50);
+		slowMotionButton.setBounds(100, 0, 150, 30);
+		slowMotionButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent arg0) {
+				slowMotion = !slowMotion;
+				if (slowMotion)
+					slowMotionButton.setText("No slow motion");
+				else
+					slowMotionButton.setText("Slow motion");
+			}
+		});
+
 		add(pauseButton);
-//		add(progressBar);
+		add(slowMotionButton);
+		// add(progressBar);
 		add(mainPanel);
 		add(dataPanel);
 	}
 
 	public void center() {
 		Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
-		setLocation((size.width - getWidth()) / 2,
-				(size.height - getHeight()) / 2);
+		setLocation((size.width - getWidth()) / 2, (size.height - getHeight()) / 2);
 	}
 
 	public void putString(final String value) {
@@ -79,11 +96,11 @@ public class MainWindow extends JFrame {
 	public void clearStrings() {
 		dataPanel.clear();
 	}
-	
-//	public void setProgress(final int newValue) {
-//		progressBar.setValue(newValue);
-//	}
-	
+
+	// public void setProgress(final int newValue) {
+	// progressBar.setValue(newValue);
+	// }
+
 	public void setTitle(final String value) {
 		dataPanel.setTitle(value);
 	}

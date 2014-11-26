@@ -95,6 +95,7 @@ public class Cannon extends RectangularObject {
 
 	public void killed() {
 		target = null;
+		fixTarget();
 		shootingLine = null;
 	}
 

@@ -10,7 +10,7 @@ import model.Board;
 public abstract class RectangularObject {
 	public enum Direction {
 		LEFT(1, 0, "DERECHA"), RIGHT(-1, 0, "IZQUIERDA"), UP(0, 1, "ABAJO"), DOWN(0, -1, "ARRIBA");
-		private final Point dir;
+		public final Point dir;
 		private final String name;
 
 		private Direction(final int x, final int y, final String name) {
@@ -109,6 +109,19 @@ public abstract class RectangularObject {
 		
 		position.setLocation(new Point(position.x + movement.x * (actualSpeed - 1), position.y + movement.y
 				* (actualSpeed - 1)));
+	}
+	
+	public Rectangle getMovePosition(final Direction direction, final int speed) {
+		if (!canMove(direction, speed)) {
+			throw new IllegalArgumentException("CAN'T MOVE THERE");
+		}
+		final Point movement = direction.getPoint();
+		final int actualSpeed = getMovementSpeed(direction, speed);
+
+		Rectangle ans = getPosition();
+		ans.setLocation(new Point(position.x + movement.x * (actualSpeed - 1), position.y + movement.y
+				* (actualSpeed - 1)));
+		return ans;
 	}
 
 	public Point center() {

@@ -15,12 +15,18 @@ import agents.hashtagCreature.BasicDodgeObstaclesRule;
 import agents.hashtagCreature.BasicMovementRule;
 import agents.hashtagCreature.DefaultRule;
 import agents.hashtagCreature.ExtremeDodgeObstaclesRule;
+import agents.hashtagCreature.SupremeRule;
 
 public class StarCreature extends RoolBasedCreature {
 	
 	private static List<Set<HeuristicRule>> getRools() {
 		final List<Set<HeuristicRule>> rules = new ArrayList<>();
 		
+		// LEVEL 0 RULZ
+		final Set<HeuristicRule> level0Rulz = new HashSet<>();
+		level0Rulz.add(SupremeRule.getRule());
+		rules.add(level0Rulz);
+
 		// LEVEL 1 RULZ
 		final Set<HeuristicRule> level1Rulz = new HashSet<>();
 		level1Rulz.add(ExtremeDodgeObstaclesRule.createRule());
@@ -33,14 +39,19 @@ public class StarCreature extends RoolBasedCreature {
 
 		// LEVEL 3 RULZ
 		final Set<HeuristicRule> level3Rulz = new HashSet<>();
-		level3Rulz.add(BasicMovementRule.getRule());
-		level3Rulz.add(SuicideRool.getRule());
+		level3Rulz.add(NoMansLandRool.getRule());
 		rules.add(level3Rulz);
 
 		// LEVEL 4 RULZ
 		final Set<HeuristicRule> level4Rulz = new HashSet<>();
-		level4Rulz.add(DefaultRule.getRule());
-		rules.add(level4Rulz);		
+		level4Rulz.add(BasicMovementRule.getRule());
+		level4Rulz.add(SuicideRool.getRule());
+		rules.add(level4Rulz);
+
+		// LEVEL 5 RULZ
+		final Set<HeuristicRule> level5Rulz = new HashSet<>();
+		level5Rulz.add(DefaultRule.getRule());
+		rules.add(level5Rulz);		
 		
 		return rules;
 	}
@@ -75,7 +86,7 @@ public class StarCreature extends RoolBasedCreature {
 
 	@Override
 	public String labelString() {
-		return "* - " + getId() + ": " + getHealth();
+		return "* " + getId() + ": " + getHealth();
 	}
 	
 }
