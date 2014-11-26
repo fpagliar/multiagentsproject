@@ -77,8 +77,13 @@ public class GUIBoard {
 		Board.restart();
 		instance = new GUIBoard();
 		instance.register(new GUICannon(Cannon.getInstance()));
-		instance.register(new GUIWall(Wall.getInstance(430, 620)));
-		instance.register(new GUIWall(Wall.getInstance(470, 570)));
+		instance.register(new GUIWall(Wall.createHorizontalInstance(600, 320, 300)));
+		instance.register(new GUIWall(Wall.createHorizontalInstance(400, 820, 400)));
+		instance.register(new GUIWall(Wall.createHorizontalInstance(550, 620)));
+		instance.register(new GUIWall(Wall.createHorizontalInstance(430, 620)));
+		instance.register(new GUIWall(Wall.createVerticalInstance(680, 400, 180)));
+		instance.register(new GUIWall(Wall.createVerticalInstance(300, 200, 350)));
+//		instance.register(new GUIWall(Wall.getInstance(470, 570)));
 		instance.register(new GUIHashtagCreature(HashtagCreature.newInstance(new Point(440, 250))));
 		instance.register(new GUIHashtagCreature(HashtagCreature.newInstance(new Point(490, 300))));
 		return instance;

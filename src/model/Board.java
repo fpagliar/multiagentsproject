@@ -1,14 +1,13 @@
 package model;
 
 import gui.GUIBoard;
+import gui.MainWindow;
 
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.sun.xml.internal.ws.api.pipe.NextAction;
 
 import agents.Cannon;
 import agents.Creature;
@@ -70,6 +69,7 @@ public class Board {
 			if ((!object.equals(actual)) && object.occupies(newPos)) {
 				if (object instanceof Cannon) {
 					gameOver = true;
+					MainWindow.getInstance().paused = true;
 //					System.out.println("MOVED TO CANNON");
 //					while (true) {
 //					}

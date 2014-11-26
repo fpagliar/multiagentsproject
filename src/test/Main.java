@@ -1,21 +1,26 @@
 package test;
 
-import java.awt.Point;
-
 import gui.GUIBoard;
 import gui.GUIHashtagCreature;
+import gui.GUIStarCreature;
 import gui.MainWindow;
 import model.Board;
 import agents.Cannon;
 import agents.Creature;
 import agents.hashtagCreature.HashtagCreature;
+import agents.starAgent.StarCreature;
 
 public class Main {
 	
-	private static final int RESPAWN_TIME = 100;
+	private static final int HASHTAG_RESPAWN_TIME = 130;
+	private static final int STAR_RESPAWN_TIME = 200;
 
 	public static void main(String[] args) {
 		final GUIBoard guiBoard = GUIBoard.createNewBoard();
+		GUIBoard.getInstance().register(
+				new GUIStarCreature(StarCreature.newInstance()));
+		GUIBoard.getInstance().register(
+				new GUIStarCreature(StarCreature.newInstance()));
 		final MainWindow window = MainWindow.getInstance();
 		window.setVisible(true);
 
@@ -35,9 +40,13 @@ public class Main {
 			} else {
 				ticks++;
 			}
-			if (epoch % RESPAWN_TIME == 0) {
+			if (epoch % HASHTAG_RESPAWN_TIME == 0) {
 				GUIBoard.getInstance().register(
 						new GUIHashtagCreature(HashtagCreature.newInstance()));
+			}
+			if (epoch % STAR_RESPAWN_TIME == 0) {
+				GUIBoard.getInstance().register(
+						new GUIStarCreature(StarCreature.newInstance()));
 			}
 			for (final Creature c : Board.getInstance().getCreatures()) {
 				c.action();
