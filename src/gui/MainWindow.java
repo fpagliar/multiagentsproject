@@ -8,9 +8,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JProgressBar;
-
-import qlearning.QLearner;
 
 public class MainWindow extends JFrame {
 
@@ -18,8 +15,8 @@ public class MainWindow extends JFrame {
 
 	private MainPanel mainPanel;
 	private DataPanel dataPanel;
-	private JProgressBar progressBar;	
-	public boolean paused = false;
+//	private JProgressBar progressBar;	
+	public volatile boolean paused = false;
 	private JButton pauseButton;
 	
 	private static MainWindow window = new MainWindow();
@@ -43,11 +40,11 @@ public class MainWindow extends JFrame {
 		dataPanel.setBackground(Color.DARK_GRAY);
 		dataPanel.setSize(400, 1000);
 		
-		progressBar = new JProgressBar(0, QLearner.TOTAL_EPOCHS);
-		progressBar.setValue(0);
-		progressBar.setSize(1000, 30);
-		progressBar.setVisible(true);
-		progressBar.setStringPainted(true);
+//		progressBar = new JProgressBar(0, QLearner.TOTAL_EPOCHS);
+//		progressBar.setValue(0);
+//		progressBar.setSize(1000, 30);
+//		progressBar.setVisible(true);
+//		progressBar.setStringPainted(true);
 		
 		pauseButton = new JButton("Pause");
 		pauseButton.setVisible(true);
@@ -64,7 +61,7 @@ public class MainWindow extends JFrame {
 		});
 		
 		add(pauseButton);
-		add(progressBar);
+//		add(progressBar);
 		add(mainPanel);
 		add(dataPanel);
 	}
@@ -83,9 +80,9 @@ public class MainWindow extends JFrame {
 		dataPanel.clear();
 	}
 	
-	public void setProgress(final int newValue) {
-		progressBar.setValue(newValue);
-	}
+//	public void setProgress(final int newValue) {
+//		progressBar.setValue(newValue);
+//	}
 	
 	public void setTitle(final String value) {
 		dataPanel.setTitle(value);

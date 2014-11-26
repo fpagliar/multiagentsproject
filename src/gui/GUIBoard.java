@@ -79,10 +79,7 @@ public class GUIBoard {
 		instance.register(new GUICannon(Cannon.getInstance()));
 		instance.register(new GUIWall(Wall.getInstance(430, 620)));
 		instance.register(new GUIWall(Wall.getInstance(470, 570)));
-//		instance.register(new GUIHashtagCreature(HashtagCreature.newInstance(new Point(300, 250))));
 		instance.register(new GUIHashtagCreature(HashtagCreature.newInstance(new Point(440, 250))));
-//		final HashtagCreature creature = HashtagCreature.newInstance(new Point(490, 700));
-//		instance.register(new GUIHashtagCreature(creature));
 		instance.register(new GUIHashtagCreature(HashtagCreature.newInstance(new Point(490, 300))));
 		return instance;
 	}

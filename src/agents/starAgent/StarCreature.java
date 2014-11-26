@@ -1,8 +1,9 @@
-package agents;
+package agents.starAgent;
 
 import java.awt.Point;
 import java.awt.Rectangle;
 
+import agents.Creature;
 import model.Board;
 import utils.RandomGenerator;
 

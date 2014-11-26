@@ -5,7 +5,7 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 
-import agents.StarCreature;
+import agents.starAgent.StarCreature;
 
 public class GUIStarCreature extends GUICreature<StarCreature> {
 
@@ -25,7 +25,7 @@ public class GUIStarCreature extends GUICreature<StarCreature> {
 		return null;
 	}
 
-	public GUIStarCreature(final agents.StarCreature creature) {
+	public GUIStarCreature(final agents.starAgent.StarCreature creature) {
 		super(creature);
 	}
 
