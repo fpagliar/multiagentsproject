@@ -22,7 +22,8 @@ public class QLearner {
 	private final double alpha = 0.1;
 	private final double gamma = 0.9;
 	// Epsilon starts with value 1 at episode 0, and will reach value ~0 at this episode
-	private final double epsilonZeroEpisode = 300;
+	private final double epsilonZeroEpisode = 3000;
+//	private final double epsilonZeroEpisode = 300;
 	public static final int TOTAL_EPOCHS = 10000;
 
 	private StarAgent creature;
@@ -73,25 +74,31 @@ public class QLearner {
 
 		// For each epoch
 		for (int i = 0; i < TOTAL_EPOCHS; i++) {
-			window.setProgress(i);
-			window.repaint();
+//			if (visual && i % (TOTAL_EPOCHS/100) == 0) {
+//				window.setProgress(i);
+//				window.repaint();
+//			}
 			if (visual) {
+				window.setProgress(i);
+				window.repaint();
 				window.clearStrings();
 			}
 			init();
 			final World world = new World(creature);
 			BoardState actualState = world.getInitialState();
 			GUIBoard.getInstance().clearTemps();
-			boolean allBest = i % 2000 == 0;
+//			boolean allBest = i != 0 && ((i % 100 == 0 && i % 1000 != 0) || i % 2000 == 0);
+			boolean allBest = i != 0 && i % (TOTAL_EPOCHS/10) == 0;
 			int ticks = 0;
 			int episode = 0;
 			double episodeEpsilon;
+//			boolean gameContinues = true;
 			while (!world.endState()) { // goal state // train episodes
 				if(window.paused)
 					continue;
 				episodeEpsilon = epsilonM * episode + 1.0; 
 				episode++;
-				if (visual && i % 1000 == 0) {
+				if (visual && (i % (TOTAL_EPOCHS/10) == 0 || i % (TOTAL_EPOCHS/10) == 1) ) {
 					ticks++;
 					if (ticks % 10 == 0) {
 						ticks = 0;
@@ -118,7 +125,10 @@ public class QLearner {
 					// Selection strategy is random in this example
 					action = actions.get((int) (RandomGenerator.getNext() * actions.size()));
 				}
-
+				
+//				if(episodeEpsilon < 0.01)
+//					gameContinues = false;
+//
 				final BoardState nextState = world.getNextState(action);
 				for (final Cannon c : Board.getInstance().getCannons()) {
 					Board.getInstance().shoot(c);
@@ -149,7 +159,8 @@ public class QLearner {
 		window.clearStrings();
 		for (final BoardState state : Q.keySet()) {
 			for (final AgentAction action : Q.get(state).keySet()) {
-				if (Q.get(state).get(action) != 0)
+//				if (Q.get(state).get(action) != 0)
+				if (currentBoard.getState() == state.getState())
 					window.putString(state.toString() + " - " + action + " : "
 							+ new DecimalFormat("#.##").format(Q.get(state).get(action)));
 //					window.putString(new Pair<BoardState, AgentAction>(state, action), 

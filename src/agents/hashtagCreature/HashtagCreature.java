@@ -40,7 +40,7 @@ public class HashtagCreature extends Creature {
 		rules.add(level4Rulz);		
 	}
 	
-	private static final int HEALTH = 4;
+	private static final int HEALTH = 5;
 	
 	private HashtagCreature(final int health, final Rectangle size, final int speed) {
 		super(health, size, speed);

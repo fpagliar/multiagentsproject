@@ -56,6 +56,10 @@ public class MainWindow extends JFrame {
 			@Override
 			public void actionPerformed(final ActionEvent arg0) {
 				paused = !paused;
+				if(paused)
+					pauseButton.setText("Continue");
+				else
+					pauseButton.setText("Pause");
 			}
 		});
 		

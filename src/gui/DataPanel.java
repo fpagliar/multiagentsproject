@@ -2,8 +2,8 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.swing.JPanel;
 
@@ -12,14 +12,14 @@ public class DataPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private static final int STRING_HEIGHT = 20;
 
-	private static List<String> values = new ArrayList<String>();
+	private static Set<String> values = new TreeSet<String>();
 	private static String title = "";
 
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.setColor(Color.RED);
-		g.drawString(title, 1000 + 10, 10);
+		g.drawString(title, 1000 + 90, 15);
 
 		int pos = 1;
 		for (final String string : values) {
@@ -27,13 +27,13 @@ public class DataPanel extends JPanel {
 				g.setColor(Color.GRAY);
 			else
 				g.setColor(Color.WHITE);
-			g.drawString(string, 1000 + 10, pos * STRING_HEIGHT + 30);
+			g.drawString(string, 1000 + 10, pos * STRING_HEIGHT + 20);
 			pos++;
 		}
 	}
 
 	public void putString(final String value) {
-		final List<String> newList = new ArrayList<>();
+		final Set<String> newList = new TreeSet<>();
 		newList.addAll(values);
 		newList.add(value);
 		values = newList;
@@ -44,6 +44,6 @@ public class DataPanel extends JPanel {
 	}
 
 	public void clear() {
-		values = new ArrayList<>();
+		values = new TreeSet<>();
 	}
 }

@@ -9,11 +9,13 @@ import model.Board;
 
 public abstract class RectangularObject {
 	public enum Direction {
-		LEFT(1, 0), RIGHT(-1, 0), UP(0, 1), DOWN(0, -1);
+		LEFT(1, 0, "DERECHA"), RIGHT(-1, 0, "IZQUIERDA"), UP(0, 1, "ABAJO"), DOWN(0, -1, "ARRIBA");
 		private final Point dir;
+		private final String name;
 
-		private Direction(final int x, final int y) {
+		private Direction(final int x, final int y, final String name) {
 			dir = new Point(x, y);
+			this.name = name;
 		}
 
 		public Point getPoint() {
@@ -22,6 +24,11 @@ public abstract class RectangularObject {
 		
 		public static Direction from(final int x, final int y) {
 			return (x == 1) ? LEFT : (x == -1) ? RIGHT : (y == 1) ? UP : (y == -1) ? DOWN : null;
+		}
+		
+		@Override
+		public String toString() {
+			return name;
 		}
 	}
 

@@ -22,10 +22,15 @@ public class StarAgent extends StarCreature {
 
 	public static StarAgent newInstance() {
 		while (true) {
-			int x = (int) (RandomGenerator.getNext() * 300 + 200);
-			int y = (int) (RandomGenerator.getNext() * 300 + 200);
-			if (Board.getInstance().isFree(new Rectangle(x, y, 20, 20)))
-				return new StarAgent(1, new Rectangle(x, y, 20, 20), 3);
+//			int x = (int) (RandomGenerator.getNext() * 300 + 200);
+//			int y = (int) (RandomGenerator.getNext() * 300 + 200);
+			int x = (int) (RandomGenerator.getNext() * 100 + 400);
+			int y = (int) (RandomGenerator.getNext() * 100 + 400);
+			if (Board.getInstance().isFree(new Rectangle(x, y, 20, 20))){
+				final StarAgent agent = new StarAgent(1, new Rectangle(x, y, 20, 20), 3);
+				if(!Board.getInstance().inShootingZone(agent))
+					return agent;
+			}
 		}
 	}
 
@@ -38,6 +43,7 @@ public class StarAgent extends StarCreature {
 	}
 
 	public void perform(final AgentAction action) {
+		System.out.println(direction + " " + action);
 		if (action == AgentAction.ROTATE) {
 			if (direction == Direction.UP) {
 				direction = Direction.LEFT;

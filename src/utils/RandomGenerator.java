@@ -2,11 +2,12 @@ package utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class RandomGenerator {
 
-//	private static final long INITIAL_SEED = 1;
-//	private static Random randomNumberGenerator = new Random(INITIAL_SEED);
+	private static final long INITIAL_SEED = 1;
+	private static Random randomNumberGenerator = new Random(INITIAL_SEED);
 	private static final List<Double> values = new ArrayList<>();
 	private static int index = 0;
 	
@@ -34,9 +35,9 @@ public class RandomGenerator {
 	
 	
 	public static double getNext() {
-		index++;
-		return values.get(index % values.size());
-//		return randomNumberGenerator.nextDouble();
+//		index++;
+//		return values.get(index % values.size());
+		return randomNumberGenerator.nextDouble();
 	}
 	
 }

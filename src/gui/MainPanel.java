@@ -3,6 +3,7 @@ package gui;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.swing.JPanel;
@@ -14,16 +15,16 @@ public class MainPanel extends JPanel {
 
 	@Override
 	public void paintComponent(Graphics g) {
-		final GUIBoard board = GUIBoard.getInstance();
 		super.paintComponent(g);
 		final Set<Point> used = new HashSet<>();
-		for (final Paintable p : board.getObjects()) {
-			used.addAll(p.paint(g));
+		List<Paintable> list = GUIBoard.getInstance().getObjects();
+		for (final Paintable p : list) {
+				used.addAll(p.paint(g));
 		}
 
 		for (final Point p : notEmpty) {
 			if (!used.contains(p)) {
-				board.getEmptyCell().paint(g, p);
+				GUIBoard.getInstance().getEmptyCell().paint(g, p);
 			}
 		}
 		notEmpty = used;

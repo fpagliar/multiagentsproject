@@ -38,6 +38,7 @@ public class World {
 	public boolean endState() {
 		if(creature.isDead() || Board.getInstance().isGameOver())
 			return true;
+//		return false;
 		int hashtag = 0;
 		for(final Creature c : Board.getInstance().getCreatures())
 			if(c instanceof HashtagCreature)
