@@ -140,6 +140,27 @@ public abstract class RectangularObject {
 	}
 	
 	
+	public double distance(final Rectangle target) {
+		return distance(new Rectangle(center().x, center().y, 1, 1), target);
+	}
+	
+	public static double distance(final Rectangle first, final Rectangle second) {
+		if (first.intersects(second))
+			return 0;
+		double deltaX;
+		if (first.x < second.x)
+			deltaX = second.x - (first.x + first.width);
+		else
+			deltaX = first.x - (second.x + second.width);
+		double deltaY;
+		if (first.y < second.y)
+			deltaY = second.y - (first.y + first.height);
+		else
+			deltaY = first.y - (second.y + second.height);
+		return Math.pow(deltaX * deltaX + deltaY * deltaY, 0.5);
+	}
+
+	
 	public abstract String labelString();
 
 }

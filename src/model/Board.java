@@ -1,7 +1,6 @@
 package model;
 
 import gui.GUIBoard;
-import gui.MainWindow;
 
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -12,17 +11,15 @@ import java.util.List;
 import agents.Cannon;
 import agents.Creature;
 import agents.RectangularObject;
-import agents.StraightLine;
 import agents.RectangularObject.Direction;
+import agents.StraightLine;
 
 public class Board {
 
 	private static Board instance = new Board();
 	private List<RectangularObject> objects = new ArrayList<RectangularObject>();
-//	private boolean gameOver;
 	
 	public Board() {
-//		gameOver = false;
 	}
 
 	public List<Creature> getCreatures() {
@@ -30,6 +27,14 @@ public class Board {
 		for (RectangularObject object : objects)
 			if (object instanceof Creature)
 				ans.add((Creature) object);
+		return ans;
+	}
+	
+	public List<Creature> getCreaturesInSight(final Creature creature) {
+		List<Creature> ans = new ArrayList<Creature>();
+		for (final Creature target : getCreatures())
+			if (creature.canSee(target))
+				ans.add(target);
 		return ans;
 	}
 
@@ -68,17 +73,9 @@ public class Board {
 	public boolean canMove(final Rectangle newPos, final RectangularObject actual) {
 		for (final RectangularObject object : objects) {
 			if ((!object.equals(actual)) && object.occupies(newPos)) {
-//				if (object instanceof Cannon) {
-//					gameOver = true;
-//					MainWindow.getInstance().paused = true;
-//					System.out.println("MOVED TO CANNON");
-//					while (true) {
-//					}
-					// System.exit(0);
-//				}
 				return false;
 			}
-			if(newPos.x < 0 || newPos.x > 1000 || newPos.y < 0 || newPos.y > 1000){
+			if (newPos.x < 0 || newPos.x > 1000 || newPos.y < 0 || newPos.y > 1000) {
 				return false;
 			}
 		}
@@ -114,7 +111,7 @@ public class Board {
 		RectangularObject min = null;
 		double minDistance = Integer.MAX_VALUE;
 		for (final RectangularObject object : objects) {
-			double d = Cannon.distance(shooter.getPosition(), object.getPosition());
+			double d = shooter.distance(object.getPosition());
 			if (!object.equals(shooter) && line.intersects(object.getPosition()) && d < minDistance) {
 				minDistance = d;
 				min = object;
@@ -148,8 +145,8 @@ public class Board {
 	public Cannon getCannon(final Creature creature){
 		double distance = Double.MAX_VALUE;
 		Cannon min = null;
-		for(final Cannon cannon : getCannons()){
-			double d = Cannon.distance(cannon.getPosition(), creature.getPosition());
+		for (final Cannon cannon : getCannons()) {
+			double d = cannon.distance(creature.getPosition());
 			if (distance > d) {
 				distance = d;
 				min = cannon;
@@ -172,8 +169,7 @@ public class Board {
 	public boolean inCircleOfFire(final Creature agent) {
 		final List<Cannon> cannons = getCannons();
 		for (final Cannon cannon : cannons) {
-			double distance = Cannon.distance(new Rectangle(cannon.center().x, cannon.center().y, 1, 1),
-					agent.getPosition());
+			double distance = cannon.distance(agent.getPosition());
 			// In the next turn they can be in shooting zone, but they aren't there now
 			if (distance < cannon.getReach() + agent.getMaxSpeed() && distance > cannon.getReach() ) {
 				return true;
@@ -185,8 +181,7 @@ public class Board {
 	public boolean inShootingZone(final Creature agent) {
 		final List<Cannon> cannons = getCannons();
 		for (final Cannon cannon : cannons) {
-			double distance = Cannon.distance(new Rectangle(cannon.center().x, cannon.center().y, 1, 1),
-					agent.getPosition());
+			double distance = cannon.distance(agent.getPosition());
 			// Cannon can shoot it
 			if (distance < cannon.getReach()) {
 				return true;
@@ -197,24 +192,13 @@ public class Board {
 	
 	public double distanceToTarget(final Creature agent) {
 		return distanceToTarget(agent.getPosition());
-//		final List<Cannon> cannons = getCannons();
-//		double minDistance = Double.MAX_VALUE;
-//		for (final Cannon cannon : cannons) {
-//			double distance = Cannon.distance(new Rectangle(cannon.center().x, cannon.center().y, 1, 1),
-//					agent.getPosition());
-//			if (distance < minDistance) {
-//				minDistance = distance;
-//			}
-//		}
-//		return minDistance;
 	}
 	
 	public double distanceToTarget(final Rectangle pos) {
 		final List<Cannon> cannons = getCannons();
 		double minDistance = Double.MAX_VALUE;
 		for (final Cannon cannon : cannons) {
-			double distance = Cannon.distance(new Rectangle(cannon.center().x, cannon.center().y, 1, 1),
-					pos);
+			double distance = cannon.distance(pos);
 			if (distance < minDistance) {
 				minDistance = distance;
 			}
@@ -222,9 +206,4 @@ public class Board {
 		return minDistance;
 	}
 
-//
-//	public boolean isGameOver() {
-//		return gameOver;
-//	}
-	
 }

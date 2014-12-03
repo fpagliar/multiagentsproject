@@ -2,7 +2,6 @@ package agents;
 
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,8 +55,7 @@ public class Cannon extends RectangularObject {
 		Creature target = null;
 		Line2D line;
 		for (final Creature c : Board.getInstance().getCreatures()) {
-			Point center = center();
-			double d = distance(new Rectangle(center.x, center.y, 1, 1), c.getPosition());
+			double d = distance(c.getPosition());
 			if (d < distance && (line = canSee(c)) != null) {
 				distance = d;
 				target = c;
@@ -105,22 +103,6 @@ public class Cannon extends RectangularObject {
 
 	public static Cannon getInstance() {
 		return new Cannon(5, new Rectangle(500 - 25, 500 - 25, 50, 50));
-	}
-
-	public static double distance(final Rectangle first, final Rectangle second) {
-		if (first.intersects(second))
-			return 0;
-		double deltaX;
-		if (first.x < second.x)
-			deltaX = second.x - (first.x + first.width);
-		else
-			deltaX = first.x - (second.x + second.width);
-		double deltaY;
-		if (first.y < second.y)
-			deltaY = second.y - (first.y + first.height);
-		else
-			deltaY = first.y - (second.y + second.height);
-		return Math.pow(deltaX * deltaX + deltaY * deltaY, 0.5);
 	}
 
 	@Override
