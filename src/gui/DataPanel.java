@@ -34,16 +34,16 @@ public class DataPanel extends JPanel {
 
 	public void putString(final String value) {
 		final List<String> newList = new ArrayList<String>();
-		newList.addAll(values);
+		newList.addAll(DataPanel.values);
 		newList.add(value);
-		values = newList;
+		DataPanel.values = newList;
 	}
 
 	public void setTitle(final String value) {
-		title = value;
+		DataPanel.title = value;
 	}
 
 	public void clear() {
-		values = new ArrayList<String>();
+		DataPanel.values = new ArrayList<String>();
 	}
 }

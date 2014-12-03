@@ -25,6 +25,8 @@ public class GUICannon extends GUIImageObject {
 		try {
 			File img = new File(IMAGE_PATH);
 			return ImageIO.read(img);
+			// FOR RUNNABLE JAR
+//			return ImageIO.read(GUICannon.class.getResource(IMAGE_PATH));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

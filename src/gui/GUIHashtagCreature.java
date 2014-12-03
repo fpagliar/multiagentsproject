@@ -18,6 +18,8 @@ public class GUIHashtagCreature extends GUICreature<HashtagCreature> {
 		try {
 			File img = new File(IMAGE_PATH);
 			return ImageIO.read(img);
+			// FOR RUNNABLE JAR
+//			return ImageIO.read(GUICannon.class.getResource(IMAGE_PATH));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
