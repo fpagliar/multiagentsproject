@@ -30,5 +30,9 @@ public abstract class Creature extends RectangularObject {
 	public boolean canSee(final Creature other) {
 		return distance(other.getPosition()) < sight;
 	}
+	
+	public int getReach() {
+		return sight;
+	}
 
 }
