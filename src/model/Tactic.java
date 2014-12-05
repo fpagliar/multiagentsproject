@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import agents.Creature;
-import agents.hashtagCreature.HashtagCreature;
 import agents.starAgent.StarCreature;
 
 public class Tactic {
@@ -23,28 +22,61 @@ public class Tactic {
 	
 	@Override
 	public int hashCode() {
-		int ans = 0;
-		for (final Creature c : creatures) {
-			ans += c.hashCode();
-		}
-		return ans + strategy.ordinal() * 1000;
+		return getHashtagAgents() + getStarAgents() * 100 + strategy.ordinal() * 10000;
 	}
 	
 	@Override
-	public String toString() {
-		StringBuilder ans = new StringBuilder();
-		int hashtagCreatures = 0;
+	public boolean equals(final Object obj) {
+		if(! (obj instanceof Tactic))
+			return false;
+		final Tactic other = (Tactic) obj;
+		return this.getStarAgents() == other.getStarAgents() &&
+				this.getHashtagAgents() == other.getHashtagAgents() &&
+				this.strategy == other.strategy;
+	}
+	
+	private int getStarAgents() {
 		int starCreatures = 0;
 		for (Creature c : creatures) {
-			if (c instanceof HashtagCreature)
-				hashtagCreatures++;
-			else if (c instanceof StarCreature)
+			if (c instanceof StarCreature)
 				starCreatures++;
 		}
-		ans.append("HASHTAG: ").append(hashtagCreatures);
-		ans.append(" STAR: ").append(starCreatures);
+		return starCreatures;		
+	}
+	
+	private int getHashtagAgents() {
+		int hashtagCreatures = 0;
+		for (Creature c : creatures) {
+			if (c instanceof StarCreature)
+				hashtagCreatures++;
+		}
+		return hashtagCreatures;		
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder ans = new StringBuilder();
+		ans.append("HASHTAG: ").append(getHashtagAgents());
+		ans.append(" STAR: ").append(getStarAgents());
 		ans.append(" STRATEGY").append(strategy.toString());
 		return ans.toString();
+	}
+	
+	private int getValue() {
+		int value = 0;
+		for(final Creature c : creatures)
+			value += c.getHealth();
+		return value;
+	}
+	
+	private int getSpeed(final Creature creature) {
+		if(strategy == Strategy.FREE_FOR_ALL)
+			return creature.getMaxSpeed();
+		int lowestSpeed = creature.getMaxSpeed();
+		for(final Creature c : creatures)
+			if(c.getMaxSpeed() < lowestSpeed)
+				lowestSpeed = c.getMaxSpeed();
+		return lowestSpeed;
 	}
 	
 }

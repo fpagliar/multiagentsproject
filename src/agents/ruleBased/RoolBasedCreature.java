@@ -47,7 +47,14 @@ public class RoolBasedCreature extends Creature {
 
 	@Override
 	public int hashCode() {
-		// TODO Auto-generated method stub
-		return 0;
+		return getId();
+	}
+	
+	@Override
+	public boolean equals(final Object obj) {
+		if(! (obj instanceof RoolBasedCreature))
+			return false;
+		final RoolBasedCreature other = (RoolBasedCreature) obj;
+		return getId() == other.getId();
 	}
 }
