@@ -4,6 +4,7 @@ import model.Action;
 import model.Board;
 import model.HeuristicRule;
 import agents.Creature;
+import agents.ruleBased.BasicMovementAction;
 
 public class SuicideRool implements HeuristicRule {
 	

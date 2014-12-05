@@ -7,9 +7,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import agents.ruleBased.BasicDodgeObstaclesRule;
+import agents.ruleBased.BasicMovementRule;
+import agents.ruleBased.DefaultRule;
+import agents.ruleBased.RoolBasedCreature;
+import agents.ruleBased.SupremeRule;
 import model.Board;
 import model.HeuristicRule;
-import model.RoolBasedCreature;
 import utils.RandomGenerator;
 
 public class HashtagCreature extends RoolBasedCreature {

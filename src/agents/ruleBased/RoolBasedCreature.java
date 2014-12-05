@@ -1,10 +1,12 @@
-package model;
+package agents.ruleBased;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import model.Board;
+import model.HeuristicRule;
 import utils.RandomGenerator;
 import agents.Creature;
 
@@ -41,5 +43,11 @@ public class RoolBasedCreature extends Creature {
 	@Override
 	public String labelString() {
 		return super.toString();
+	}
+
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

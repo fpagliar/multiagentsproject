@@ -1,4 +1,4 @@
-package agents.hashtagCreature;
+package agents.ruleBased;
 
 import agents.Creature;
 import model.Action;

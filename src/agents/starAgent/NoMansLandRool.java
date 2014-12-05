@@ -4,8 +4,8 @@ import model.Action;
 import model.Board;
 import model.HeuristicRule;
 import agents.Creature;
-import agents.hashtagCreature.DefaultAction;
 import agents.hashtagCreature.HashtagCreature;
+import agents.ruleBased.DefaultAction;
 
 public class NoMansLandRool implements HeuristicRule {
 	

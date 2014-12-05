@@ -1,4 +1,4 @@
-package agents.hashtagCreature;
+package agents.ruleBased;
 
 import java.util.ArrayList;
 import java.util.HashSet;

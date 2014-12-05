@@ -7,6 +7,9 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
+import model.BlackBoard;
+import model.Tactic;
+
 public class DataPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -14,6 +17,7 @@ public class DataPanel extends JPanel {
 
 	private static List<String> values = new ArrayList<String>();
 	private static String title = "";
+	private static BlackBoard blackboard = BlackBoard.getInstance();
 
 	@Override
 	public void paintComponent(Graphics g) {
@@ -28,6 +32,17 @@ public class DataPanel extends JPanel {
 			else
 				g.setColor(Color.WHITE);
 			g.drawString(string, 1000 + 10, pos * STRING_HEIGHT + 20);
+			pos++;
+		}
+		pos = 20;
+		g.setColor(Color.RED);
+		g.drawString("BLACKBOARD", 1000 + 150, pos * STRING_HEIGHT + 20);
+		for (final Tactic tactic : blackboard.getTactics()) {
+			if (pos % 2 == 0)
+				g.setColor(Color.GRAY);
+			else
+				g.setColor(Color.WHITE);
+			g.drawString(tactic.toString(), 1000 + 10, pos * STRING_HEIGHT + 20);
 			pos++;
 		}
 	}

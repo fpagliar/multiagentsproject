@@ -5,8 +5,8 @@ import model.Board;
 import model.HeuristicRule;
 import agents.Cannon;
 import agents.Creature;
-import agents.hashtagCreature.BasicMovementAction;
 import agents.hashtagCreature.HashtagCreature;
+import agents.ruleBased.BasicMovementAction;
 
 public class SuicideRool implements HeuristicRule {
 	

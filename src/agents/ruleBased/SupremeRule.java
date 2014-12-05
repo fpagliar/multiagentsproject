@@ -1,25 +1,26 @@
-package agents.hashtagCreature;
+package agents.ruleBased;
 
-import agents.Creature;
 import model.Action;
 import model.Board;
 import model.HeuristicRule;
+import agents.Creature;
 
-public class DefaultRule implements HeuristicRule {
+public class SupremeRule implements HeuristicRule {
 
-	private static DefaultRule rool = new DefaultRule();
+	private static SupremeRule rool = new SupremeRule();
 
-	public static DefaultRule getRule() {
+	public static SupremeRule getRule() {
 		return rool;
 	}
 
 	@Override
 	public boolean applies(final Creature agent, final Board board) {
-		return true;
+		return board.touchingCannon(agent);
 	}
 
 	@Override
 	public Action getAction() {
+		//STAY
 		return DefaultAction.getAction();
 	}
 

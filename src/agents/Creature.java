@@ -34,5 +34,7 @@ public abstract class Creature extends RectangularObject {
 	public int getReach() {
 		return sight;
 	}
+	
+	public abstract int hashCode();
 
 }

@@ -9,13 +9,13 @@ import java.util.Set;
 
 import model.Board;
 import model.HeuristicRule;
-import model.RoolBasedCreature;
 import utils.RandomGenerator;
-import agents.hashtagCreature.BasicDodgeObstaclesRule;
-import agents.hashtagCreature.BasicMovementRule;
-import agents.hashtagCreature.DefaultRule;
 import agents.hashtagCreature.ExtremeDodgeObstaclesRule;
-import agents.hashtagCreature.SupremeRule;
+import agents.ruleBased.BasicDodgeObstaclesRule;
+import agents.ruleBased.BasicMovementRule;
+import agents.ruleBased.DefaultRule;
+import agents.ruleBased.RoolBasedCreature;
+import agents.ruleBased.SupremeRule;
 
 public class StarCreature extends RoolBasedCreature {
 	

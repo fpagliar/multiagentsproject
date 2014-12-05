@@ -1,4 +1,4 @@
-package agents.hashtagCreature;
+package agents.ruleBased;
 
 import gui.MainWindow;
 
