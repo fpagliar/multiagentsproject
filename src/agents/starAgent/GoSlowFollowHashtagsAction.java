@@ -5,9 +5,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import utils.RandomGenerator;
 import model.Action;
 import model.Board;
+import utils.RandomGenerator;
 import agents.Cannon;
 import agents.Creature;
 import agents.RectangularObject.Direction;
@@ -49,10 +49,10 @@ public class GoSlowFollowHashtagsAction implements Action {
 		// Move to a random possible direction
 		final Direction direction = dirs.get((int) (RandomGenerator.getNext() * dirs.size()));
 		final double moveDistance = board.distanceToTarget(creature.getMovePosition(direction, 1));
-		final double secondHashtagDistance = NoMansLandRool.secondHashtagDistance(board);
-		// If I will pass it, stay
-		if(moveDistance < secondHashtagDistance)
-			return;
+//		final double secondHashtagDistance = NoMansLandRool.secondHashtagDistance(board);
+//		// If I will pass it, stay
+//		if(moveDistance < secondHashtagDistance)
+//			return;
 		creature.move(direction, 1);
 		return;
 	}

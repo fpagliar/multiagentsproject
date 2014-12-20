@@ -17,8 +17,8 @@ import agents.starAgent.StarCreature;
 
 public class Main {
 	
-	private static final int HASHTAG_RESPAWN_TIME = 130;
-	private static final int STAR_RESPAWN_TIME = 200;
+	private static final int HASHTAG_RESPAWN_TIME = 2000;
+	private static final int STAR_RESPAWN_TIME = 2000;
 
 	public static void main(String[] args) {
 		final GUIBoard guiBoard = GUIBoard.createNewBoard();
@@ -57,7 +57,7 @@ public class Main {
 				if(noMansLand.size() > 0 && window.slowMotion)
 					Thread.sleep(200, 0);
 				else
-					Thread.sleep(50, 0);
+					Thread.sleep(20, 0);
 			} catch (InterruptedException e) {
 			}
 			epoch++;

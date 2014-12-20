@@ -17,7 +17,6 @@ public class BasicDodgeObstaclesRule implements HeuristicRule {
 	
 	private Direction target = null;
 	
-	
 	// Not a singleton, because the action has memory, so it is an instance per rule
 	public static BasicDodgeObstaclesRule createRule() {
 		return new BasicDodgeObstaclesRule();

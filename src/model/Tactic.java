@@ -9,7 +9,7 @@ import agents.starAgent.StarCreature;
 public class Tactic {
 
 	public static enum Strategy {
-		TANKING, FREE_FOR_ALL
+		TANKING, FREE_FOR_ALL, HALF_SWITCHER
 	};
 	
 	private final Set<Creature> creatures;
@@ -62,15 +62,18 @@ public class Tactic {
 		return ans.toString();
 	}
 	
-	private int getValue() {
+	public int getValue() {
 		int value = 0;
 		for(final Creature c : creatures)
 			value += c.getHealth();
 		return value;
 	}
 	
-	private int getSpeed(final Creature creature) {
+	public int getSpeed(final Creature creature) {
 		if(strategy == Strategy.FREE_FOR_ALL)
+			return creature.getMaxSpeed();
+		if (strategy == Strategy.HALF_SWITCHER
+				&& Board.getInstance().distanceToTarget(creature) < Board.getInstance().getCannon(creature).getReach() / 2)
 			return creature.getMaxSpeed();
 		int lowestSpeed = creature.getMaxSpeed();
 		for(final Creature c : creatures)

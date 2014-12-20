@@ -9,7 +9,7 @@ import model.Board;
 
 public abstract class RectangularObject {
 	public enum Direction {
-		LEFT(1, 0, "DERECHA"), RIGHT(-1, 0, "IZQUIERDA"), UP(0, 1, "ABAJO"), DOWN(0, -1, "ARRIBA");
+		RIGHT(1, 0, "DERECHA"), LEFT(-1, 0, "IZQUIERDA"), DOWN(0, 1, "ABAJO"), UP(0, -1, "ARRIBA");
 		public final Point dir;
 		private final String name;
 
@@ -23,7 +23,7 @@ public abstract class RectangularObject {
 		}
 		
 		public static Direction from(final int x, final int y) {
-			return (x == 1) ? LEFT : (x == -1) ? RIGHT : (y == 1) ? UP : (y == -1) ? DOWN : null;
+			return (x == 1) ? RIGHT : (x == -1) ? LEFT : (y == 1) ? DOWN : (y == -1) ? UP : null;
 		}
 		
 		@Override
@@ -112,15 +112,16 @@ public abstract class RectangularObject {
 	}
 	
 	public Rectangle getMovePosition(final Direction direction, final int speed) {
-		if (!canMove(direction, speed)) {
-			throw new IllegalArgumentException("CAN'T MOVE THERE");
-		}
+//		if (!canMove(direction, speed)) {
+////			throw new IllegalArgumentException("CAN'T MOVE THERE");
+////			System.out.println("WATAFA");
+//		}
 		final Point movement = direction.getPoint();
-		final int actualSpeed = getMovementSpeed(direction, speed);
+//		final int actualSpeed = getMovementSpeed(direction, speed);
 
 		Rectangle ans = getPosition();
-		ans.setLocation(new Point(position.x + movement.x * (actualSpeed - 1), position.y + movement.y
-				* (actualSpeed - 1)));
+		ans.setLocation(new Point(position.x + movement.x * (speed - 1), position.y + movement.y
+				* (speed - 1)));
 		return ans;
 	}
 

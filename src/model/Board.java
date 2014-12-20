@@ -18,6 +18,7 @@ public class Board {
 
 	private static Board instance = new Board();
 	private List<RectangularObject> objects = new ArrayList<RectangularObject>();
+	public static final int CIRCLE_OF_FIRE_SIZE = 35;
 	
 	public Board() {
 	}
@@ -33,7 +34,7 @@ public class Board {
 	public List<Creature> getCreaturesInSight(final Creature creature) {
 		List<Creature> ans = new ArrayList<Creature>();
 		for (final Creature target : getCreatures())
-			if (creature.canSee(target))
+			if (!creature.equals(target) && creature.canSee(target))
 				ans.add(target);
 		return ans;
 	}
@@ -169,19 +170,51 @@ public class Board {
 	public boolean inCircleOfFire(final Creature agent) {
 		final List<Cannon> cannons = getCannons();
 		for (final Cannon cannon : cannons) {
-			double distance = cannon.distance(agent.getPosition());
+//			double distance = cannon.distance(agent.getPosition());
+			final Point center = agent.center();
+			double distance = cannon.distance(new Rectangle(center.x, center.y, 1, 1));
 			// In the next turn they can be in shooting zone, but they aren't there now
-			if (distance < cannon.getReach() + agent.getMaxSpeed() && distance > cannon.getReach() ) {
+//			if (distance < cannon.getReach() + agent.getMaxSpeed() && distance > cannon.getReach() ) {
+			if (distance < cannon.getReach() + CIRCLE_OF_FIRE_SIZE && distance > cannon.getReach() ) {
 				return true;
 			}
 		}
 		return false;
 	}
 	
-	public boolean inShootingZone(final Creature agent) {
+//	public boolean inCircleOfFire(final Rectangle newPos, final int agentMaxSpeed) {
+	public boolean inCircleOfFire(final Rectangle newPos) {
 		final List<Cannon> cannons = getCannons();
 		for (final Cannon cannon : cannons) {
-			double distance = cannon.distance(agent.getPosition());
+			double distance = cannon.distance(new Rectangle((int)newPos.getCenterX(), (int)newPos.getCenterY(), 1, 1));
+//			double distance = cannon.distance(newPos);
+			// In the next turn they can be in shooting zone, but they aren't there now
+//			if (distance < cannon.getReach() + agentMaxSpeed && distance > cannon.getReach() ) {
+			if (distance < cannon.getReach() + CIRCLE_OF_FIRE_SIZE && distance > cannon.getReach() ) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	
+	public boolean inShootingZone(final Creature agent) {
+//		final List<Cannon> cannons = getCannons();
+//		for (final Cannon cannon : cannons) {
+//			double distance = cannon.distance(agent.getPosition());
+//			// Cannon can shoot it
+//			if (distance < cannon.getReach()) {
+//				return true;
+//			}
+//		}
+//		return false;
+		return inShootingZone(agent.getPosition());
+	}
+	
+	public boolean inShootingZone(final Rectangle rectangle) {
+		final List<Cannon> cannons = getCannons();
+		for (final Cannon cannon : cannons) {
+			double distance = cannon.distance(rectangle);
 			// Cannon can shoot it
 			if (distance < cannon.getReach()) {
 				return true;
@@ -189,6 +222,7 @@ public class Board {
 		}
 		return false;
 	}
+
 	
 	public double distanceToTarget(final Creature agent) {
 		return distanceToTarget(agent.getPosition());

@@ -6,7 +6,7 @@ import model.HeuristicRule;
 import agents.Cannon;
 import agents.Creature;
 import agents.hashtagCreature.HashtagCreature;
-import agents.ruleBased.BasicMovementAction;
+import agents.starAgent.StarCreature;
 
 public class SuicideRool implements HeuristicRule {
 	
@@ -40,7 +40,8 @@ public class SuicideRool implements HeuristicRule {
 
 	@Override
 	public Action getAction() {
-		return BasicMovementAction.getAction();
+		return null;
+//		return BasicMovementAction.getAction();
 	}
 
 }

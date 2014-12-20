@@ -10,6 +10,7 @@ import java.util.Set;
 
 import javax.imageio.ImageIO;
 
+import model.Board;
 import agents.Cannon;
 import agents.RectangularObject;
 
@@ -81,15 +82,23 @@ public class GUICannon extends GUIImageObject {
 		Set<Point> points = super.paint(g);
 		final int radius = cannon.getReach();
 		final Rectangle position = cannon.getPosition();
-		int centerX = position.x + position.width / 2;
-		int centerY = position.y + position.height/2;
+		final int centerX = position.x + position.width / 2;
+		final int centerY = position.y + position.height/2;
 		g.setColor(Color.RED);
-		for(int x = centerX - radius; x < centerX + radius ; x++){
+		for (int x = centerX - radius; x < centerX + radius; x++) {
 			int y = (int) Math.pow(radius * radius - (x - centerX) * (x - centerX), 0.5);
 			g.drawRect(x, centerY + y, 1, 1);
-			g.drawRect(x, centerY - y, 1, 1);			
+			g.drawRect(x, centerY - y, 1, 1);
 		}
 		
+		g.setColor(Color.ORANGE);
+		final int outerRadius = cannon.getReach() + Board.CIRCLE_OF_FIRE_SIZE;
+		for (int x = centerX - outerRadius; x < centerX + outerRadius; x++) {
+			int y = (int) Math.pow(outerRadius * outerRadius - (x - centerX) * (x - centerX), 0.5);
+			g.drawRect(x, centerY + y, 1, 1);
+			g.drawRect(x, centerY - y, 1, 1);
+		}
+
 		return points;
 	}
 }

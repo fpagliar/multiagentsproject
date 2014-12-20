@@ -22,7 +22,7 @@ public class Cannon extends RectangularObject {
 		super(position, 0);
 		this.fireRate = fireRate;
 		this.angle = 0;
-		this.reach = 100;
+		this.reach = 150;
 	}
 
 	// public void action(long timestamp) {

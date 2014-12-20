@@ -1,11 +1,10 @@
-package agents.starAgent;
+package agents.hashtagCreature;
 
 import model.Action;
 import model.Board;
 import model.HeuristicRule;
 import agents.Creature;
-import agents.hashtagCreature.HashtagCreature;
-import agents.ruleBased.DefaultAction;
+import agents.starAgent.GoSlowFollowHashtagsAction;
 
 public class NoMansLandRool implements HeuristicRule {
 	

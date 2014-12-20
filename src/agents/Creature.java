@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 public abstract class Creature extends RectangularObject {
 
 	private int health;
-	private int sight = 100;
+	private int sight = 150;
 	
 	protected Creature(final int health, final Rectangle size, final int maxSpeed) {
 		super(size, maxSpeed);
