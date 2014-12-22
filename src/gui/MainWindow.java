@@ -18,8 +18,10 @@ public class MainWindow extends JFrame {
 	// private JProgressBar progressBar;
 	public volatile boolean paused = false;
 	public volatile boolean slowMotion = false;
+	public volatile boolean debugDraw = false;
 	private JButton pauseButton;
 	private JButton slowMotionButton;
+	private JButton debugDrawButton;
 
 	private static MainWindow window = new MainWindow();
 
@@ -64,7 +66,6 @@ public class MainWindow extends JFrame {
 
 		slowMotionButton = new JButton("Slow motion");
 		slowMotionButton.setVisible(true);
-//		slowMotionButton.setSize(100, 50);
 		slowMotionButton.setBounds(100, 0, 150, 30);
 		slowMotionButton.addActionListener(new ActionListener() {
 			@Override
@@ -76,9 +77,25 @@ public class MainWindow extends JFrame {
 					slowMotionButton.setText("Slow motion");
 			}
 		});
+		
+		debugDrawButton = new JButton("Debug draw");
+		debugDrawButton.setVisible(true);
+		debugDrawButton.setBounds(250, 0, 150, 30);
+		debugDrawButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent arg0) {
+				debugDraw = !debugDraw;
+				if (debugDraw)
+					debugDrawButton.setText("No debug draw");
+				else
+					debugDrawButton.setText("Debug draw");
+			}
+		});
+
 
 		add(pauseButton);
 		add(slowMotionButton);
+		add(debugDrawButton);
 		// add(progressBar);
 		add(mainPanel);
 		add(dataPanel);

@@ -43,17 +43,18 @@ public abstract class GUICreature<T extends Creature> extends GUIImageObject {
 	@Override
 	public Set<Point> paint(Graphics g) {
 		Set<Point> points = super.paint(g);
-		final int radius = creature.getReach();
-		final Rectangle position = creature.getPosition();
-		int centerX = position.x + position.width / 2;
-		int centerY = position.y + position.height/2;
-		g.setColor(Color.CYAN);
-		for(int x = centerX - radius; x < centerX + radius ; x++){
-			int y = (int) Math.pow(radius * radius - (x - centerX) * (x - centerX), 0.5);
-			g.drawRect(x, centerY + y, 1, 1);
-			g.drawRect(x, centerY - y, 1, 1);			
-		}
-		
+		if(MainWindow.getInstance().debugDraw){
+			final int radius = creature.getReach();
+			final Rectangle position = creature.getPosition();
+			int centerX = position.x + position.width / 2;
+			int centerY = position.y + position.height/2;
+			g.setColor(Color.CYAN);
+			for(int x = centerX - radius; x < centerX + radius ; x++){
+				int y = (int) Math.pow(radius * radius - (x - centerX) * (x - centerX), 0.5);
+				g.drawRect(x, centerY + y, 1, 1);
+				g.drawRect(x, centerY - y, 1, 1);			
+			}			
+		}	
 		return points;
 	}
 
