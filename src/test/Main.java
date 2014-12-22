@@ -1,5 +1,6 @@
 package test;
 
+import gui.GUIAmpersandCreature;
 import gui.GUIBoard;
 import gui.GUIHashtagCreature;
 import gui.GUIStarCreature;
@@ -11,6 +12,7 @@ import java.util.List;
 
 import model.BlackBoard;
 import model.Board;
+import agents.AmpersandCreature;
 import agents.Cannon;
 import agents.Creature;
 import agents.hashtagCreature.HashtagCreature;
@@ -19,8 +21,9 @@ import agents.starAgent.StarCreature;
 
 public class Main {
 	
-	private static final int HASHTAG_RESPAWN_TIME = 200;
+	private static final int HASHTAG_RESPAWN_TIME = 400;
 	private static final int STAR_RESPAWN_TIME = 200;
+	private static final int AMPERSAND_RESPAWN_TIME = 300;
 
 	public static void main(String[] args) {
 		final GUIBoard guiBoard = GUIBoard.createNewBoard();
@@ -76,6 +79,10 @@ public class Main {
 			if (epoch % STAR_RESPAWN_TIME == 0) {
 				GUIBoard.getInstance().register(
 						new GUIStarCreature(StarCreature.newInstance()));
+			}
+			if (epoch % AMPERSAND_RESPAWN_TIME == 0) {
+				GUIBoard.getInstance().register(
+						new GUIAmpersandCreature(AmpersandCreature.newInstance()));
 			}
 			for (final Creature c : Board.getInstance().getCreatures()) {
 				c.action();
