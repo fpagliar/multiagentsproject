@@ -10,7 +10,7 @@ import agents.ruleBased.RoolBasedCreature;
 
 public class StarCreature extends RoolBasedCreature {
 		
-	private static final int HEALTH = 1;
+	private static final int HEALTH = 2;
 
 	protected StarCreature(final int health, final Rectangle size, final int speed) {
 		super(health, size, speed);
@@ -20,7 +20,8 @@ public class StarCreature extends RoolBasedCreature {
 		while (true) {
 			int x = (int) (RandomGenerator.getNext() * 1000);
 			int y = (int) (RandomGenerator.getNext() * 1000);
-			if (Board.getInstance().isFree(new Rectangle(x, y, 20, 20))) 
+			final Rectangle pos = new Rectangle(x, y, 20, 20);
+			if (Board.getInstance().isFree(pos) && !Board.getInstance().inShootingZone(pos)) 
 				return new StarCreature(HEALTH, new Rectangle(x, y, 20, 20), 3);
 		}
 	}

@@ -1,9 +1,11 @@
 package model;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
 import agents.Creature;
+import agents.hashtagCreature.HashtagCreature;
 import agents.starAgent.StarCreature;
 
 public class Tactic {
@@ -14,6 +16,7 @@ public class Tactic {
 	
 	private final Set<Creature> creatures;
 	private final Strategy strategy;
+	private boolean winner = false;
 	
 	public Tactic(final Set<Creature> creatures, final Strategy strategy) {
 		this.creatures = new HashSet<>(creatures);
@@ -47,19 +50,31 @@ public class Tactic {
 	private int getHashtagAgents() {
 		int hashtagCreatures = 0;
 		for (Creature c : creatures) {
-			if (c instanceof StarCreature)
+			if (c instanceof HashtagCreature)
 				hashtagCreatures++;
 		}
 		return hashtagCreatures;		
 	}
 
+	public void setWinner() {
+		winner = true;
+	}
+	
+	public boolean isWinner() {
+		return winner;
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder ans = new StringBuilder();
 		ans.append("HASHTAG: ").append(getHashtagAgents());
 		ans.append(" STAR: ").append(getStarAgents());
-		ans.append(" STRATEGY").append(strategy.toString());
+		ans.append(" STRATEGY: ").append(strategy.toString());
 		return ans.toString();
+	}
+	
+	public Strategy getStrategy() {
+		return strategy;
 	}
 	
 	public int getValue() {
@@ -67,6 +82,10 @@ public class Tactic {
 		for(final Creature c : creatures)
 			value += c.getHealth();
 		return value;
+	}
+	
+	public Set<Creature> getCreatures() {
+		return Collections.unmodifiableSet(creatures);
 	}
 	
 	public int getSpeed(final Creature creature) {

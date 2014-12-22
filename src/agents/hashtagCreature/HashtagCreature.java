@@ -57,8 +57,9 @@ public class HashtagCreature extends RoolBasedCreature {
 				x = 550;
 			if (y > 450 && y < 550)
 				y = 550;
-			if(Board.getInstance().isFree(new Rectangle(x, y, 40, 40)))
-				return new HashtagCreature(HEALTH, new Rectangle(x, y, 40, 40), 1);
+			final Rectangle pos = new Rectangle(x, y, 40, 40);
+			if(Board.getInstance().isFree(pos) && !Board.getInstance().inShootingZone(pos))
+				return new HashtagCreature(HEALTH, pos, 1);
 		}
 	}
 

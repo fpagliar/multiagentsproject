@@ -10,6 +10,7 @@ import model.Board;
 
 public class Cannon extends RectangularObject {
 
+	private static final int FIRE_RATE = 11;
 	private final int fireRate;
 	private final float angle;
 	private final int reach;
@@ -21,6 +22,7 @@ public class Cannon extends RectangularObject {
 	public Cannon(final int fireRate, final Rectangle position) {
 		super(position, 0);
 		this.fireRate = fireRate;
+		cooldown = fireRate;
 		this.angle = 0;
 		this.reach = 150;
 	}
@@ -70,6 +72,10 @@ public class Cannon extends RectangularObject {
 			this.shootingLine = null;
 		}
 	}
+	
+	public Creature getTarget() {
+		return target;
+	}
 
 	public Line2D canSee(final Creature creature) {
 		List<Point> targets = new ArrayList<>();
@@ -102,7 +108,7 @@ public class Cannon extends RectangularObject {
 	}
 
 	public static Cannon getInstance() {
-		return new Cannon(5, new Rectangle(500 - 25, 500 - 25, 50, 50));
+		return new Cannon(FIRE_RATE, new Rectangle(500 - 25, 500 - 25, 50, 50));
 	}
 
 	@Override

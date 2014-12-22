@@ -9,16 +9,18 @@ import gui.MessageWindow;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.BlackBoard;
 import model.Board;
 import agents.Cannon;
 import agents.Creature;
 import agents.hashtagCreature.HashtagCreature;
+import agents.ruleBased.RoolBasedCreature;
 import agents.starAgent.StarCreature;
 
 public class Main {
 	
-	private static final int HASHTAG_RESPAWN_TIME = 2000;
-	private static final int STAR_RESPAWN_TIME = 2000;
+	private static final int HASHTAG_RESPAWN_TIME = 200;
+	private static final int STAR_RESPAWN_TIME = 200;
 
 	public static void main(String[] args) {
 		final GUIBoard guiBoard = GUIBoard.createNewBoard();
@@ -84,12 +86,13 @@ public class Main {
 			for (final Cannon c : Board.getInstance().getCannons()) {
 				Board.getInstance().shoot(c);
 			}
-			int starTouching = 0;
-			for(final Creature c : touching)
-				if(c instanceof StarCreature)
-					starTouching++;
-			if (starTouching > 1 && (System.currentTimeMillis() - lastGoalTime) > 5000) {
+			int creaturesTouching = 0;
+			for (final Creature c : touching)
+				creaturesTouching++;
+			if (creaturesTouching > 1 && (System.currentTimeMillis() - lastGoalTime) > 5000) {
 				lastGoalTime = System.currentTimeMillis();
+				final RoolBasedCreature winner = (RoolBasedCreature) touching.get(0);
+				BlackBoard.getInstance().writeSuccess(winner.getTactic());
 				new MessageWindow("THE GOAL WAS REACHED");
 			}
 		}

@@ -34,10 +34,11 @@ public class DataPanel extends JPanel {
 			g.drawString(string, 1000 + 10, pos * STRING_HEIGHT + 20);
 			pos++;
 		}
-		pos = 20;
+		pos = 25;
 		g.setColor(Color.RED);
-		g.drawString("BLACKBOARD", 1000 + 150, pos * STRING_HEIGHT + 20);
-		for (final Tactic tactic : blackboard.getTactics()) {
+		g.drawString("BLACKBOARD - FAILED", 1000 + 140, pos * STRING_HEIGHT + 20);
+		pos++;
+		for (final Tactic tactic : blackboard.getTacticsFailed()) {
 			if (pos % 2 == 0)
 				g.setColor(Color.GRAY);
 			else
@@ -45,6 +46,19 @@ public class DataPanel extends JPanel {
 			g.drawString(tactic.toString(), 1000 + 10, pos * STRING_HEIGHT + 20);
 			pos++;
 		}
+		pos += 1;
+		g.setColor(Color.RED);
+		g.drawString("BLACKBOARD - SUCCESS", 1000 + 140, pos * STRING_HEIGHT + 20);
+		pos++;
+		for (final Tactic tactic : blackboard.getSuccessfulTactics()) {
+			if (pos % 2 == 0)
+				g.setColor(Color.GRAY);
+			else
+				g.setColor(Color.WHITE);
+			g.drawString(tactic.toString(), 1000 + 10, pos * STRING_HEIGHT + 20);
+			pos++;
+		}
+
 	}
 
 	public void putString(final String value) {
